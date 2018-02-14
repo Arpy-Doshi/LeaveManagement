@@ -1,7 +1,13 @@
 package com.brevitaz.model;
 
+import java.util.Date;
+
 public class Employee {
 
-    String id;
-    String name;
+    private String id;
+    private String name;
+    private Date dateOfJoin;
+    private String department;
+
+
 }
