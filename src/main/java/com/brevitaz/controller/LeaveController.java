@@ -32,14 +32,14 @@ public class LeaveController {
     }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // personal record.
-    public void getByName( @PathVariable String id)
+    public void getById( @PathVariable String id)
     {
         System.out.println("record is viewed.");
     }
 
 
 //**************** what should i pass in below two methods ?
-    @RequestMapping(value = "/check-request/" , method = RequestMethod.GET)
+    @RequestMapping(value = "/check-request" , method = RequestMethod.GET)
     public void checkRequest()
     {
         System.out.println("request is checked.");

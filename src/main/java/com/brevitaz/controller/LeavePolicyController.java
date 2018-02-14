@@ -4,7 +4,7 @@ import com.brevitaz.model.Employee;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/leave-policy")
+@RequestMapping("/leave/policies")
 public class LeavePolicyController {
 
     @RequestMapping(value = "" , method = RequestMethod.POST)
@@ -29,4 +29,9 @@ public class LeavePolicyController {
     {
         System.out.println("policy is viewed.");
     }
+
+
+
+
+
 }
