@@ -4,7 +4,7 @@ import org.omg.CORBA.PRIVATE_MEMBER;
 
 import java.util.Date;
 
-public class LeaveApplicaion
+public class LeaveApplication
 {
 
     private String reason;
@@ -76,7 +76,7 @@ public class LeaveApplicaion
 
     @Override
     public String toString() {
-        return "LeaveApplicaion{" +
+        return "LeaveApplication{" +
                 "reason='" + reason + '\'' +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
