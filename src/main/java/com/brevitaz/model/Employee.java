@@ -9,5 +9,46 @@ public class Employee {
     private Date dateOfJoin;
     private String department;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getDateOfJoin() {
+        return dateOfJoin;
+    }
+
+    public void setDateOfJoin(Date dateOfJoin) {
+        this.dateOfJoin = dateOfJoin;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", dateOfJoin=" + dateOfJoin +
+                ", department='" + department + '\'' +
+                '}';
+    }
 }
