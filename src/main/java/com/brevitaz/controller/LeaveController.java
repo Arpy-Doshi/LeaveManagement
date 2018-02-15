@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.*;
 public class LeaveController {
 
     @RequestMapping(value = "/request" , method = RequestMethod.POST)
-    public void request(@RequestBody Employee employee)
+    public void request(@RequestBody Request request)
     {
         System.out.println("request is sent.");
     }
 
     @RequestMapping(value = "/cancel-request/{id}" , method = RequestMethod.DELETE)
-    public void cancelRequest(@PathVariable String id)
+    public void cancelRequest(@RequestBody Request request , @PathVariable String id)
     {
         System.out.println("cancelRequest is sent.");
     }
 
     @RequestMapping(value = "/check-status/{id}" , method = RequestMethod.GET)
-    public void checkStatus(@PathVariable String id)
+    public void checkStatus(@RequestBody Request request,@PathVariable String id)
     {
         System.out.println("leave status is checked.");
     }
