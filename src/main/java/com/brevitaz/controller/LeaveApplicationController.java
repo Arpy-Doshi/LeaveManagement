@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/leaves")
 public class LeaveApplicationController {
 
-    @RequestMapping(value = "/request" , method = RequestMethod.POST)
-    public void request(@RequestBody LeaveApplication leaveApplication)
+    @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)
+    public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String eid)
     {
-        System.out.println("request is sent.");
+        return true;
     }
 
-    @RequestMapping(value = "/cancel-request/{id}" , method = RequestMethod.DELETE)
-    public void cancelRequest(@RequestBody LeaveApplication leaveApplication , @PathVariable String id)
+    @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.DELETE)
+    public void cancelRequest(@RequestBody LeaveApplication leaveApplication , @PathVariable String eid , @PathVariable String lid)
     {
         System.out.println("cancelRequest is sent.");
     }
 
-    @RequestMapping(value = "/check-status/{id}" , method = RequestMethod.GET)
-    public void checkStatus(@RequestBody LeaveApplication leaveApplication,@PathVariable String id)
+    @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.GET)
+    public void checkStatus(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid)
     {
         System.out.println("leave status is checked.");
     }
 
-    @RequestMapping(value = "/check-balance/{id}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/remaining-leaves/{id}" , method = RequestMethod.GET)
     public void checkBalance(@PathVariable String id)
     {
         System.out.println("balance is checked.");

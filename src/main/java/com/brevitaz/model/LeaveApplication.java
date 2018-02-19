@@ -2,11 +2,13 @@ package com.brevitaz.model;
 
 import org.omg.CORBA.PRIVATE_MEMBER;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class LeaveApplication
 {
-
+    private String id;
     private String reason;
     private Date fromDate;
     private Date toDate;
@@ -19,11 +21,19 @@ public class LeaveApplication
     }
     private enum Status
     {
-        APPLIED,ACCEPTED,DECLINED;
+        ACCEPTED,PENDING,DECLINED;
     }
     private enum Time
     {
         FIRSTHALF,SECONDHALF,FULLDAY;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getReason() {
@@ -77,7 +87,8 @@ public class LeaveApplication
     @Override
     public String toString() {
         return "LeaveApplication{" +
-                "reason='" + reason + '\'' +
+                "id='" + id + '\'' +
+                ", reason='" + reason + '\'' +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
                 ", type=" + type +
