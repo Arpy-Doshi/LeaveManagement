@@ -50,8 +50,7 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "/check-request" , method = RequestMethod.GET)
-    public List<LeaveApplication> checkRequest()
-    {
+    public List<LeaveApplication> checkRequest() throws IOException {
         return leaveApplicationDao.checkRequest();
     }
 

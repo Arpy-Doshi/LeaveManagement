@@ -22,7 +22,7 @@ public class LeaveApplication
     }
     private enum Status
     {
-        ACCEPTED,PENDING,DECLINED;
+        APPROVED,PENDING,DECLINED;
     }
     private enum Time
     {
