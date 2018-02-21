@@ -32,21 +32,27 @@ public class LeaveApplicationController {
         return leaveApplicationDao.cancelRequest(eid,lid);
     }
 
+    @RequestMapping(value = "/{eid}/{lid}", method = RequestMethod.PUT)
+    public boolean updateRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid , @PathVariable String lid) throws IOException {
+        return leaveApplicationDao.updateRequest(leaveApplication,eid,lid);
+    }
+
+
+
     @RequestMapping(value = "/{eid}/leave-status/{lid}" , method = RequestMethod.GET)
-    public LeaveApplication checkStatus(@PathVariable String eid,@PathVariable String lid)
-    {
+    public LeaveApplication checkStatus(@PathVariable String eid,@PathVariable String lid) throws IOException {
         return leaveApplicationDao.checkStatus(eid,lid);
     }
 
     @RequestMapping(value = "/remaining-leaves/{eid}" , method = RequestMethod.GET)
     public double checkBalance(@PathVariable String eid)
     {
-        return leaveApplicationDao.checkBalance(eid);
+        return 0;
     }
 
     @RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // personal record.
-    public List<LeaveApplication> getById( @PathVariable String eid) throws IOException {
-        return (List<LeaveApplication>) leaveApplicationDao.getById(eid);
+    public LeaveApplication getById( @PathVariable String eid) throws IOException {
+        return leaveApplicationDao.getById(eid);
     }
 
     @RequestMapping(value = "/check-request" , method = RequestMethod.GET)
@@ -56,14 +62,12 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "{eid}/approve-request/{lid}" , method = RequestMethod.POST)//status changes in service
-    public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid)
-    {
+    public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid) throws IOException {
         return leaveApplicationDao.approveRequest(leaveApplication,eid,lid);
     }
 
     @RequestMapping(value = "{eid}/decline-request/{lid}" , method = RequestMethod.POST)//status changes in service
-    public boolean declineRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid)
-    {
+    public boolean declineRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid) throws IOException {
         return leaveApplicationDao.declineRequest(leaveApplication,eid,lid);
     }
 

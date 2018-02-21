@@ -94,15 +94,25 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
 
     @Override
-    public List<LeaveApplication> getById(String eid) throws IOException //remaining
+    public LeaveApplication getById(String eid) throws IOException //remaining
     {
-       /* GetRequest getRequest = new GetRequest(
+        GetRequest getRequest = new GetRequest(
                 INDEX_NAME,
                 TYPE_NAME,
                 eid);
-       */
-        List<LeaveApplication> leaveApplications = new ArrayList<>();
-        SearchRequest request = new SearchRequest(INDEX_NAME,TYPE_NAME,eid);
+        GetResponse getResponse = client.getClient().get(getRequest);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        LeaveApplication leaveApplication  = objectMapper.readValue(getResponse.getSourceAsString(),LeaveApplication.class);
+
+
+        System.out.println(leaveApplication);
+        return leaveApplication;
+
+
+       /* List<LeaveApplication> leaveApplications = new ArrayList<>();
+        SearchRequest request = new SearchRequest(INDEX_NAME);
 
         request.types(TYPE_NAME);
         SearchResponse response = client.getClient().search(request);
@@ -116,17 +126,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             leaveApplications.add(leaveApplication);
         }
         return leaveApplications;
+*/
 
-
-        /*GetResponse getResponse = client.getClient().get(getRequest);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        LeaveApplication leaveApplication  = objectMapper.readValue(getResponse.getSourceAsString(),LeaveApplication.class);
-
-
-        System.out.println(leaveApplication);
-        return leaveApplications;*/
     }
 
     @Override
