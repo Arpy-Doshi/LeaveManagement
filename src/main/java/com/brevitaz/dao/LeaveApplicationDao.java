@@ -19,7 +19,7 @@ public interface LeaveApplicationDao {
 
     public double checkBalance(String eid);
 
-    public List<LeaveApplication> getById(String eid);
+    public List<LeaveApplication> getById(String eid) throws IOException;
 
     public List<LeaveApplication> checkRequest();
 
