@@ -76,26 +76,27 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication,String eid,String lid) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        UpdateRequest updateRequest = new UpdateRequest(
+        UpdateRequest request = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
                 lid).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
-        UpdateResponse updateResponse = client.getClient().update(updateRequest);
+        UpdateResponse updateResponse = client.getClient().update(request);
         System.out.println("Update: "+updateResponse);
         return true;
     }
 
     @Override
-    public LeaveApplication checkStatus(String eid,String lid)
-    {
-        LeaveApplication leaveApplication= null;
+    public LeaveApplication checkStatus(String eid,String lid) throws IOException {
+        GetRequest getRequest = new GetRequest(
+                INDEX_NAME,
+                TYPE_NAME,
+                lid);
+
+        GetResponse getResponse = client.getClient().get(getRequest);
+        LeaveApplication leaveApplication  = objectMapper.readValue(getResponse.getSourceAsString(),LeaveApplication.class);
+        System.out.println(leaveApplication.getStatus());
         return leaveApplication;
     }
 
-    @Override
-    public double checkBalance(String eid)
-    {
-        return 0;
-    }
 
     @Override
     public List<LeaveApplication> getById(String eid) throws IOException //remaining
@@ -105,7 +106,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 TYPE_NAME,
                 eid);
        */
-       List<LeaveApplication> leaveApplications = new ArrayList<>();
+        List<LeaveApplication> leaveApplications = new ArrayList<>();
         SearchRequest request = new SearchRequest(INDEX_NAME,TYPE_NAME,eid);
 
         request.types(TYPE_NAME);
@@ -163,14 +164,29 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public boolean approveRequest(LeaveApplication leaveApplication,String eid,String lid)
-    {
+    public boolean approveRequest(LeaveApplication leaveApplication,String eid,String lid) throws IOException {
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        UpdateRequest request = new UpdateRequest(
+                INDEX_NAME,TYPE_NAME,
+                lid).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
+        UpdateResponse updateResponse = client.getClient().update(request);
+        System.out.println("Update: "+updateResponse);
         return true;
     }
 
     @Override
-    public boolean declineRequest(LeaveApplication leaveApplication,String eid,String lid)
-    {
+    public boolean declineRequest(LeaveApplication leaveApplication,String eid,String lid) throws IOException {
+        DeleteRequest request = new DeleteRequest(
+                INDEX_NAME,
+                TYPE_NAME,
+                lid);
+
+        DeleteResponse response = client.getClient().delete(request);
+
+        System.out.println(response.status());
+
+        System.out.println(response);
+
         return true;
     }
 
