@@ -15,7 +15,8 @@ public class LeaveApplication
     private Date toDate;
     private Type type;
     private Status status;
-    private Time time;
+    private Time fromTime;
+    private Time toTime;
     private enum Type
     {
         PLANNED_LEAVE,UNPLANNED_LEAVE,LEAVE_WITHOUT_PAY;
@@ -29,20 +30,20 @@ public class LeaveApplication
         FIRSTHALF,SECONDHALF,FULLDAY;
     }
 
-    public String getEmp_id() {
-        return emp_id;
-    }
-
-    public void setEmp_id(String emp_id) {
-        this.emp_id = emp_id;
-    }
-
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getEmp_id() {
+        return emp_id;
+    }
+
+    public void setEmp_id(String emp_id) {
+        this.emp_id = emp_id;
     }
 
     public String getReason() {
@@ -85,12 +86,20 @@ public class LeaveApplication
         this.status = status;
     }
 
-    public Time getTime() {
-        return time;
+    public Time getFromTime() {
+        return fromTime;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setFromTime(Time fromTime) {
+        this.fromTime = fromTime;
+    }
+
+    public Time getToTime() {
+        return toTime;
+    }
+
+    public void setToTime(Time toTime) {
+        this.toTime = toTime;
     }
 
     @Override
@@ -103,7 +112,8 @@ public class LeaveApplication
                 ", toDate=" + toDate +
                 ", type=" + type +
                 ", status=" + status +
-                ", time=" + time +
+                ", fromTime=" + fromTime +
+                ", toTime=" + toTime +
                 '}';
     }
 }
