@@ -5,6 +5,8 @@ import com.brevitaz.model.LeaveApplication;
 import jdk.net.SocketFlow;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/leaves")
@@ -12,6 +14,8 @@ public class LeaveApplicationController {
 
 
     LeaveApplication leaveApplication = null;
+    List<LeaveApplication> leaveApplications = null;
+
 
     @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)
     public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String eid)
@@ -20,7 +24,7 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.DELETE)
-    public boolean cancelRequest(@RequestBody LeaveApplication leaveApplication , @PathVariable String eid , @PathVariable String lid)
+    public boolean cancelRequest(@PathVariable String eid , @PathVariable String lid)
     {
         return true;
     }
@@ -31,14 +35,14 @@ public class LeaveApplicationController {
         return leaveApplication;
     }
 
-    /*@RequestMapping(value = "/remaining-leaves/{eid}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/remaining-leaves/{eid}" , method = RequestMethod.GET)
     public void checkBalance(@PathVariable String eid)
     {
         System.out.println("balance is checked.");
     }
-    */
-    @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // personal record.
-    public LeaveApplication getById( @PathVariable String id)
+
+    @RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // personal record.
+    public LeaveApplication getById( @PathVariable String eid)
     {
         return leaveApplication;
     }
@@ -62,8 +66,8 @@ public class LeaveApplicationController {
     }*/
 
     @RequestMapping(value = "" , method = RequestMethod.GET) // all record.
-    public void getAll()
+    public List<LeaveApplication> getAll()
     {
-        System.out.println("record is viewed.");
+        return leaveApplications;
     }
 }
