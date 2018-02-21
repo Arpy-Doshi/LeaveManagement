@@ -17,6 +17,7 @@ public class LeaveApplication
     private Status status;
     private Time fromTime;
     private Time toTime;
+
     private enum Type
     {
         PLANNED_LEAVE,UNPLANNED_LEAVE,LEAVE_WITHOUT_PAY;
