@@ -26,6 +26,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
@@ -101,7 +102,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     @Override
     public List<LeaveApplication> getById(String eid) throws IOException //remaining
     {
-        SearchRequest request = new SearchRequest(INDEX_NAME);
+  /*      SearchRequest request = new SearchRequest(INDEX_NAME);
         request.types(TYPE_NAME);
 
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
@@ -126,38 +127,30 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         return leaveApplications;
 
 
-        /*
-        GetRequest getRequest = new GetRequest(
-                INDEX_NAME,
-                TYPE_NAME,
-                eid);
-        GetResponse getResponse = client.getClient().get(getRequest);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        LeaveApplication leaveApplication  = objectMapper.readValue(getResponse.getSourceAsString(),LeaveApplication.class);
-
-
-        System.out.println(leaveApplication);
-        return leaveApplication;
-
 */
-       /* List<LeaveApplication> leaveApplications = new ArrayList<>();
         SearchRequest request = new SearchRequest(INDEX_NAME);
-
         request.types(TYPE_NAME);
-        SearchResponse response = client.getClient().search(request);
+
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("emp_id", eid)));
+        request.source(sourceBuilder);
+
+        SearchResponse response;
+        List<LeaveApplication> leaveApplications=new ArrayList<>();
+
+        response = client.getClient().search(request);
+
         SearchHit[] hits = response.getHits().getHits();
 
         LeaveApplication leaveApplication;
-
         for (SearchHit hit : hits)
         {
             leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
             leaveApplications.add(leaveApplication);
         }
+
         return leaveApplications;
-*/
 
     }
 
@@ -217,6 +210,34 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         return true;
     }
 
+    /*public List<LeaveApplication> getByDate(Date fromDate,Date toDate) throws IOException {
+
+        LeaveApplication leaveApplication;
+        SearchRequest request = new SearchRequest(INDEX_NAME);
+        request.types(TYPE_NAME);
+
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("fromDate", eid)));
+        request.source(sourceBuilder);
+        SearchResponse response;
+        List<LeaveApplication> leaveApplications=new ArrayList<>();
+
+        response = client.getClient().search(request);
+
+        SearchHit[] hits = response.getHits().getHits();
+
+        LeaveApplication leaveApplication;
+        for (SearchHit hit : hits)
+        {
+            leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+            leaveApplications.add(leaveApplication);
+        }
+
+        return leaveApplications;
+
+    }
+*/
     @Override
     public List<LeaveApplication> getAll() throws IOException {
         List<LeaveApplication> leaveApplications = new ArrayList<>();

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 public interface LeaveApplicationDao {
@@ -27,6 +28,8 @@ public interface LeaveApplicationDao {
 
    /* public LeaveApplication getReport();
 */
+  // public List<LeaveApplication> getByDate(Date fromDate,Date toDate) throws IOException;
+
     public List<LeaveApplication> getAll() throws IOException;
 }
 
