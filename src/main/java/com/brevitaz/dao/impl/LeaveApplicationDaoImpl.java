@@ -18,13 +18,18 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
 @Repository
 public class LeaveApplicationDaoImpl implements LeaveApplicationDao
@@ -131,10 +136,32 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public List<LeaveApplication> checkRequest()
-    {
-        List<LeaveApplication> leaveApplications = null;
+    public List<LeaveApplication> checkRequest() throws IOException {
+        SearchRequest request = new SearchRequest(INDEX_NAME);
+        request.types(TYPE_NAME);
+
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+
+        sourceBuilder.query(QueryBuilders.boolQuery().must(termQuery("status", "pending")));
+        request.source(sourceBuilder);
+
+        SearchResponse response;
+        List<LeaveApplication> leaveApplications=new ArrayList<>();
+
+        response = client.getClient().search(request);
+
+        SearchHit[] hits = response.getHits().getHits();
+
+        LeaveApplication leaveApplication;
+        for (SearchHit hit : hits)
+        {
+            leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+            leaveApplications.add(leaveApplication);
+        }
+
         return leaveApplications;
+
+
     }
 
     @Override

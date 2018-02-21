@@ -19,7 +19,7 @@ public interface LeaveApplicationDao {
 
     public LeaveApplication getById(String eid) throws IOException;
 
-    public List<LeaveApplication> checkRequest();
+    public List<LeaveApplication> checkRequest() throws IOException;
 
     public boolean approveRequest(LeaveApplication leaveApplication, String eid, String lid) throws IOException;
 
