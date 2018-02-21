@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/leave-policy")
+@RequestMapping("/leave/policies")
 public class LeavePolicyController {
 
     @Autowired
@@ -39,4 +39,9 @@ public class LeavePolicyController {
     public List<LeavePolicy> getAll() throws IOException {
         return leavePolicyDao.getAll();
     }
+
+
+
+
+
 }
