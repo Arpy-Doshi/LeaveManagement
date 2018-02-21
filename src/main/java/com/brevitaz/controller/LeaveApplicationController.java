@@ -18,10 +18,6 @@ public class LeaveApplicationController {
     @Autowired
     private LeaveApplicationDao leaveApplicationDao;
 
-    LeaveApplication leaveApplication = null;
-    List<LeaveApplication> leaveApplications = null;
-
-
     @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)
     public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String eid) throws IOException {
         return leaveApplicationDao.request(leaveApplication,eid);
