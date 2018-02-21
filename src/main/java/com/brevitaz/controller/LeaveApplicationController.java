@@ -29,6 +29,13 @@ public class LeaveApplicationController {
         return true;
     }
 
+    @RequestMapping(value = "/{eid}/{lid}", method = RequestMethod.PUT)
+    public boolean updateRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid , @PathVariable String lid)
+    {
+        return true;
+    }
+
+
     @RequestMapping(value = "/{eid}/leave-status/{lid}" , method = RequestMethod.GET)
     public LeaveApplication checkStatus(@PathVariable String eid,@PathVariable String lid)
     {
@@ -81,12 +88,12 @@ public class LeaveApplicationController {
 
 
     //**************** what should i pass in below two methods ?
-    @RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // getByDate remaining.
+    /*@RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // getByDate remaining.
     public List<LeaveApplication> getByDate( @PathVariable String eid)
     {
         return leaveApplications;
     }
-
+*/
 
 
 

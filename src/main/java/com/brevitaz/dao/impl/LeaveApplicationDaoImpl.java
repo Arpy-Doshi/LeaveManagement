@@ -5,6 +5,7 @@ import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -38,21 +39,95 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     ElasticConfig client;
 
     @Override
-    public boolean request(LeaveApplication leaveApplication) throws IOException {
+    public boolean request(LeaveApplication leaveApplication,String eid) throws IOException {
         IndexRequest request = new IndexRequest(
                 INDEX_NAME,
                 TYPE_NAME,""+leaveApplication.getId()
         );
-
         //ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(leaveApplication);
-
         request.source(json, XContentType.JSON);
-
         IndexResponse indexResponse= client.getClient().index(request);
-
         System.out.println(indexResponse);
 
+        return true;
+    }
+
+    @Override
+    public boolean cancelRequest(String eid,String lid) throws IOException {
+        DeleteRequest request = new DeleteRequest(
+                INDEX_NAME,
+                TYPE_NAME,
+                lid);
+
+        DeleteResponse response = client.getClient().delete(request);
+
+        System.out.println(response.status());
+
+        System.out.println(response);
+        return true;
+    }
+
+    @Override
+    public boolean updateRequest(LeaveApplication leaveApplication,String eid,String lid) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        UpdateRequest updateRequest = new UpdateRequest(
+                INDEX_NAME,TYPE_NAME,
+                lid).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
+        UpdateResponse updateResponse = client.getClient().update(updateRequest);
+        System.out.println("Update: "+updateResponse);
+        return true;
+    }
+
+    @Override
+    public LeaveApplication checkStatus(String eid,String lid)
+    {
+        LeaveApplication leaveApplication= null;
+        return leaveApplication;
+    }
+
+    @Override
+    public double checkBalance(String eid)
+    {
+        return 0;
+    }
+
+    @Override
+    public List<LeaveApplication> getById(String eid) //remaining
+    {
+        GetRequest getRequest = new GetRequest(
+                INDEX_NAME,
+                TYPE_NAME,
+                eid);
+        List<LeaveApplication> leaveApplications = null;
+
+        GetResponse getResponse = client.getClient().get(getRequest);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        LeaveApplication leaveApplication  = objectMapper.readValue(getResponse.getSourceAsString(),LeaveApplication.class);
+
+
+        System.out.println(leaveApplication);
+        return leaveApplications;
+    }
+
+    @Override
+    public List<LeaveApplication> checkRequest()
+    {
+        List<LeaveApplication> leaveApplications = null;
+        return leaveApplications;
+    }
+
+    @Override
+    public boolean approveRequest(LeaveApplication leaveApplication,String eid,String lid)
+    {
+        return true;
+    }
+
+    @Override
+    public boolean declineRequest(LeaveApplication leaveApplication,String eid,String lid)
+    {
         return true;
     }
 
@@ -75,47 +150,9 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
     }
 
-    @Override
-    public boolean update(LeaveApplication leaveApplication,String id) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        UpdateRequest updateRequest = new UpdateRequest(
-                INDEX_NAME,TYPE_NAME,
-                id).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
-        UpdateResponse updateResponse = client.getClient().update(updateRequest);
-        System.out.println("Update: "+updateResponse);
-        return true;
-    }
-
-    @Override
-    public boolean delete(String id) throws IOException {
-        DeleteRequest request = new DeleteRequest(
-                INDEX_NAME,
-                TYPE_NAME,
-                id);
-
-        DeleteResponse response = client.getClient().delete(request);
-
-        System.out.println(response.status());
-
-        System.out.println(response);
-        return true;
-    }
-
-    @Override
-    public LeaveApplication getById(String id) throws IOException {
-        GetRequest getRequest = new GetRequest(
-                INDEX_NAME,
-                TYPE_NAME,
-                id);
-
-        GetResponse getResponse = client.getClient().get(getRequest);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        LeaveApplication leaveApplication  = objectMapper.readValue(getResponse.getSourceAsString(),LeaveApplication.class);
 
 
-        System.out.println(leaveApplication);
-        return leaveApplication;
-    }
+
+
+
 }
