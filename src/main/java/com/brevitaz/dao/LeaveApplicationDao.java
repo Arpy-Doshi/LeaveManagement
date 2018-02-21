@@ -17,7 +17,7 @@ public interface LeaveApplicationDao {
 
     public LeaveApplication checkStatus(String eid, String lid) throws IOException;
 
-    public LeaveApplication getById(String eid) throws IOException;
+    public List<LeaveApplication> getById(String eid) throws IOException;
 
     public List<LeaveApplication> checkRequest() throws IOException;
 
