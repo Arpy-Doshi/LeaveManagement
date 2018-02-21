@@ -28,8 +28,7 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.DELETE)
-    public boolean cancelRequest(@PathVariable String eid , @PathVariable String lid)
-    {
+    public boolean cancelRequest(@PathVariable String eid , @PathVariable String lid) throws IOException {
         return leaveApplicationDao.cancelRequest(eid,lid);
     }
 
@@ -53,7 +52,7 @@ public class LeaveApplicationController {
     @RequestMapping(value = "/check-request" , method = RequestMethod.GET)
     public List<LeaveApplication> checkRequest()
     {
-        return leaveApplicationDao.checkrequest();
+        return leaveApplicationDao.checkRequest();
     }
 
     @RequestMapping(value = "{eid}/approve-request/{lid}" , method = RequestMethod.POST)//status changes in service
