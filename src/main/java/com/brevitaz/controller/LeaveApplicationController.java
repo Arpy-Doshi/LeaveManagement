@@ -2,6 +2,7 @@ package com.brevitaz.controller;
 
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
+import com.sun.xml.internal.ws.api.message.Packet;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,13 +17,14 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.DELETE)
-    public void cancelRequest(@RequestBody LeaveApplication leaveApplication , @PathVariable String eid , @PathVariable String lid)
+    public boolean cancelRequest(@RequestBody LeaveApplication leaveApplication , @PathVariable String eid , @PathVariable String lid)
     {
         System.out.println("cancelRequest is sent.");
+        return false;
     }
 
     @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.GET)
-    public void checkStatus(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid)
+    public void checkstatus(@PathVariable String lid)
     {
         System.out.println("leave status is checked.");
     }
