@@ -18,6 +18,8 @@ public class LeaveApplicationController {
     @Autowired
     private LeaveApplicationDao leaveApplicationDao;
 
+
+
     @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)
     public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String eid) throws IOException {
         return leaveApplicationDao.request(leaveApplication,eid);
@@ -40,14 +42,14 @@ public class LeaveApplicationController {
         return leaveApplicationDao.checkStatus(eid,lid);
     }
 
-    @RequestMapping(value = "/remaining-leaves/{eid}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/remaining-leaves/{eid}" , method = RequestMethod.GET)//remaining
     public double checkBalance(@PathVariable String eid)
     {
         return 0;
     }
 
     @RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // personal record.
-    public LeaveApplication getById( @PathVariable String eid) throws IOException {
+    public List<LeaveApplication> getById( @PathVariable String eid) throws IOException {
         return leaveApplicationDao.getById(eid);
     }
 
