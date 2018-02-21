@@ -36,38 +36,60 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "/remaining-leaves/{eid}" , method = RequestMethod.GET)
-    public void checkBalance(@PathVariable String eid)
+    public double checkBalance(@PathVariable String eid)
     {
-        System.out.println("balance is checked.");
+        return 0;
     }
 
     @RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // personal record.
-    public LeaveApplication getById( @PathVariable String eid)
+    public List<LeaveApplication> getById( @PathVariable String eid)
+    {
+        return leaveApplications;
+    }
+
+    @RequestMapping(value = "/check-request/" , method = RequestMethod.GET)
+    public List<LeaveApplication> checkRequest()
+    {
+        return leaveApplications;
+    }
+
+    @RequestMapping(value = "{eid}/approve-request/{lid}" , method = RequestMethod.POST)//status changes in service
+    public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid)
+    {
+        return true;
+    }
+
+    @RequestMapping(value = "{eid}/decline-request/{lid}" , method = RequestMethod.POST)//status changes in service
+    public boolean declineRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid)
+    {
+        return true;
+    }
+
+    @RequestMapping(value = "/get-report" , method = RequestMethod.GET)//2 things in service 1 is emp wise i.e. getById & 2 is date wise i.e.From Date To Date
+    public LeaveApplication getReport()
     {
         return leaveApplication;
     }
-
-
-    //**************** what should i pass in below two methods ?
-    @RequestMapping(value = "/check-request/" , method = RequestMethod.GET)
-    public void checkRequest()
-    {
-        System.out.println("request is checked.");
-    }
-    @RequestMapping(value = "/approve-request" , method = RequestMethod.POST)
-    public void approveRequest(@RequestBody Employee employee)
-    {
-        System.out.println("request is approved.");
-    }
-    /*@RequestMapping(value = "/generate-record" , method = RequestMethod.POST)
-    public void generateRecord(@RequestBody Employee employee)
-    {
-        System.out.println("record is generated.");
-    }*/
 
     @RequestMapping(value = "" , method = RequestMethod.GET) // all record.
     public List<LeaveApplication> getAll()
     {
         return leaveApplications;
     }
+
+
+
+
+    //**************** what should i pass in below two methods ?
+    @RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // getByDate remaining.
+    public List<LeaveApplication> getByDate( @PathVariable String eid)
+    {
+        return leaveApplications;
+    }
+
+
+
+
+
+
 }
