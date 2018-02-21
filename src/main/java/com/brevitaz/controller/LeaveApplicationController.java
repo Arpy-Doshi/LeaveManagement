@@ -2,13 +2,16 @@ package com.brevitaz.controller;
 
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
-import com.sun.xml.internal.ws.api.message.Packet;
+import jdk.net.SocketFlow;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/leaves")
 public class LeaveApplicationController {
+
+
+    LeaveApplication leaveApplication = null;
 
     @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)
     public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String eid)
@@ -19,31 +22,30 @@ public class LeaveApplicationController {
     @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.DELETE)
     public boolean cancelRequest(@RequestBody LeaveApplication leaveApplication , @PathVariable String eid , @PathVariable String lid)
     {
-        System.out.println("cancelRequest is sent.");
-        return false;
+        return true;
     }
 
-    @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.GET)
-    public void checkstatus(@PathVariable String lid)
+    @RequestMapping(value = "/{eid}/leave-status/{lid}" , method = RequestMethod.GET)
+    public LeaveApplication checkStatus(@PathVariable String eid,@PathVariable String lid)
     {
-        System.out.println("leave status is checked.");
+        return leaveApplication;
     }
 
-    @RequestMapping(value = "/remaining-leaves/{id}" , method = RequestMethod.GET)
-    public void checkBalance(@PathVariable String id)
+    /*@RequestMapping(value = "/remaining-leaves/{eid}" , method = RequestMethod.GET)
+    public void checkBalance(@PathVariable String eid)
     {
         System.out.println("balance is checked.");
     }
-
+    */
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // personal record.
-    public void getById( @PathVariable String id)
+    public LeaveApplication getById( @PathVariable String id)
     {
-        System.out.println("record is viewed.");
+        return leaveApplication;
     }
 
 
-//**************** what should i pass in below two methods ?
-    @RequestMapping(value = "/check-request" , method = RequestMethod.GET)
+    //**************** what should i pass in below two methods ?
+    @RequestMapping(value = "/check-request/" , method = RequestMethod.GET)
     public void checkRequest()
     {
         System.out.println("request is checked.");
@@ -64,6 +66,4 @@ public class LeaveApplicationController {
     {
         System.out.println("record is viewed.");
     }
-
-
 }

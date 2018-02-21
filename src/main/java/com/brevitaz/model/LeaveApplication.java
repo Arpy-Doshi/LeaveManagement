@@ -9,6 +9,7 @@ import java.util.List;
 public class LeaveApplication
 {
     private String id;
+    private String emp_id;
     private String reason;
     private Date fromDate;
     private Date toDate;
@@ -26,6 +27,14 @@ public class LeaveApplication
     private enum Time
     {
         FIRSTHALF,SECONDHALF,FULLDAY;
+    }
+
+    public String getEmp_id() {
+        return emp_id;
+    }
+
+    public void setEmp_id(String emp_id) {
+        this.emp_id = emp_id;
     }
 
     public String getId() {
@@ -88,6 +97,7 @@ public class LeaveApplication
     public String toString() {
         return "LeaveApplication{" +
                 "id='" + id + '\'' +
+                ", emp_id='" + emp_id + '\'' +
                 ", reason='" + reason + '\'' +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
