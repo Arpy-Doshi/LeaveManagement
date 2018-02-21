@@ -38,7 +38,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     ElasticConfig client;
 
     @Override
-    public boolean request(LeaveApplication leaveApplication) throws IOException {
+    public boolean request(LeaveApplication leaveApplication ,String eid) throws IOException {
         IndexRequest request = new IndexRequest(
                 INDEX_NAME,
                 TYPE_NAME,""+leaveApplication.getId()

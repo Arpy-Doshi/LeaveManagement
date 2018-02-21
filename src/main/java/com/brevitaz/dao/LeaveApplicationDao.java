@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LeaveApplicationDao
 {
-    public boolean request(LeaveApplication leaveApplication) throws IOException;
+    public boolean request(LeaveApplication leaveApplication,String eid) throws IOException;
     public List<LeaveApplication> getAll() throws IOException;
     public boolean update(LeaveApplication leaveApplication,String id) throws IOException;
     public boolean delete(String id)throws IOException;
