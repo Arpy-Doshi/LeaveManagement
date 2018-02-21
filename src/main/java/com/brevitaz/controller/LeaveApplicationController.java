@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ public class LeaveApplicationController {
 
 
 
-    @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)
+    @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)//do count type of leave in service
     public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String eid) throws IOException {
         return leaveApplicationDao.request(leaveApplication,eid);
     }
@@ -68,11 +69,13 @@ public class LeaveApplicationController {
         return leaveApplicationDao.declineRequest(leaveApplication,eid,lid);
     }
 
-   /* @RequestMapping(value = "/get-report" , method = RequestMethod.GET)//2 things in service 1 is emp wise i.e. getById & 2 is date wise i.e.From Date To Date
-    public LeaveApplication getReport()
-    {
-        return leaveApplicationDao.getReport();
-    }*/
+
+/*
+    @RequestMapping(value = "/get-by-date/{fromDate}/{toDate}" , method = RequestMethod.GET) // compare dates in service remaining.
+    public List<LeaveApplication> getByDate(@PathVariable Date fromDate,@PathVariable Date toDate) throws IOException {
+        return leaveApplicationDao.getByDate(fromDate,toDate);
+    }
+*/
 
     @RequestMapping(value = "" , method = RequestMethod.GET) // all record.
     public List<LeaveApplication> getAll() throws IOException {
@@ -83,11 +86,13 @@ public class LeaveApplicationController {
 
 
     //**************** what should i pass in below two methods ?
-   /* @RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // getByDate remaining.
-    public List<LeaveApplication> getByDate( @PathVariable String eid)
+   /*
+   @RequestMapping(value = "/get-report" , method = RequestMethod.GET)//2 things in service 1 is emp wise i.e. getById & 2 is date wise i.e.From Date To Date
+    public LeaveApplication getReport()
     {
-        return leaveApplications;
+        //return leaveApplicationDao.getReport();
     }
+
 */
 
 
