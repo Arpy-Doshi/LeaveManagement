@@ -15,17 +15,15 @@ public interface LeaveApplicationDao {
 
     public boolean updateRequest(LeaveApplication leaveApplication, String eid, String lid) throws IOException;
 
-    public LeaveApplication checkStatus(String eid, String lid);
-
-    public double checkBalance(String eid);
+    public LeaveApplication checkStatus(String eid, String lid) throws IOException;
 
     public List<LeaveApplication> getById(String eid) throws IOException;
 
     public List<LeaveApplication> checkRequest();
 
-    public boolean approveRequest(LeaveApplication leaveApplication, String eid, String lid);
+    public boolean approveRequest(LeaveApplication leaveApplication, String eid, String lid) throws IOException;
 
-    public boolean declineRequest(LeaveApplication leaveApplication, String eid, String lid);
+    public boolean declineRequest(LeaveApplication leaveApplication, String eid, String lid) throws IOException;
 
    /* public LeaveApplication getReport();
 */
