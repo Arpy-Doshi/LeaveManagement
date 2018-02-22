@@ -28,7 +28,6 @@ public interface LeaveApplicationDao {
 
    /* public LeaveApplication getReport();
 */
-  // public List<LeaveApplication> getByDate(Date fromDate,Date toDate) throws IOException;
 
     public List<LeaveApplication> getAll() throws IOException;
 }
