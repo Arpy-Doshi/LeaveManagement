@@ -69,8 +69,8 @@ public class LeaveApplicationController {
         return leaveApplicationDao.declineRequest(leaveApplication,eid,lid);
     }
 
-
-    @RequestMapping(value = "/get-by-date/{fromDate}/{toDate}" , method = RequestMethod.GET) // compare dates in service remaining.
+    // we will get this list from service using getAll method.
+    @RequestMapping(value = "/get-by-date/{fromDate}/{toDate}" , method = RequestMethod.GET)
     public List<LeaveApplication> getByDate(@PathVariable Date fromDate,@PathVariable Date toDate) throws IOException {
         return leaveApplicationDao.getAll();
     }
