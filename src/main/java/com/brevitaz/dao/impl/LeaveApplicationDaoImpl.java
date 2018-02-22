@@ -212,34 +212,6 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         return true;
     }
 
-    /*public List<LeaveApplication> getByDate(Date fromDate,Date toDate) throws IOException {
-
-        LeaveApplication leaveApplication;
-        SearchRequest request = new SearchRequest(INDEX_NAME);
-        request.types(TYPE_NAME);
-
-        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-
-        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("fromDate", eid)));
-        request.source(sourceBuilder);
-        SearchResponse response;
-        List<LeaveApplication> leaveApplications=new ArrayList<>();
-
-        response = client.getClient().search(request);
-
-        SearchHit[] hits = response.getHits().getHits();
-
-        LeaveApplication leaveApplication;
-        for (SearchHit hit : hits)
-        {
-            leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
-            leaveApplications.add(leaveApplication);
-        }
-
-        return leaveApplications;
-
-    }
-*/
     @Override
     public List<LeaveApplication> getAll() throws IOException {
         List<LeaveApplication> leaveApplications = new ArrayList<>();
