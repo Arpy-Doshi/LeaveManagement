@@ -2,10 +2,8 @@ package com.brevitaz.dao.impl;
 
 import com.brevitaz.config.ElasticConfig;
 import com.brevitaz.dao.LeaveApplicationDao;
-import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
@@ -100,7 +97,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
 
     @Override
-    public List<LeaveApplication> getById(String eid) throws IOException //remaining
+    public List<LeaveApplication> getById(String eid) throws IOException
     {
   /*      SearchRequest request = new SearchRequest(INDEX_NAME);
         request.types(TYPE_NAME);
