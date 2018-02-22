@@ -31,28 +31,65 @@ public class EmployeeDaoTest {
 
     @Test
     public void getAllTest() throws IOException {
+
+        Employee employee = new Employee();
+        employee.setId("3");
+        employee.setName("dffbf");
+        employee.setDepartment("ndfhfjd");
+
+        boolean status = employeeDao.create(employee);
+        Assert.assertEquals(true,status);
+
         List<Employee> employees = employeeDao.getAll();
         int size = employees.size();
-        Assert.assertEquals(1,size);
+        Assert.assertEquals(3,size);
     }
 
     @Test
     public void get() throws IOException {
-        Employee employee = employeeDao.getById("1");
-        Assert.assertNotNull(employee);
+
+        Employee employee = new Employee();
+        employee.setId("2");
+        employee.setName("Arpy");
+
+        employee.setDepartment("Java");
+
+        boolean status = employeeDao.create(employee);
+        Assert.assertEquals(true,status);
+
+        Employee employee1 = employeeDao.getById("2");
+        Assert.assertNotNull(employee1);
     }
 
     @Test
     public void update() throws IOException {
+
         Employee employee = new Employee();
+        employee.setId("2");
+        employee.setName("pr");
+
+        employee.setDepartment("Java");
+
+        boolean status = employeeDao.create(employee);
+        Assert.assertEquals(true,status);
+
+        Employee employee1 = new Employee();
         employee.setName("arpy");
-        boolean status = employeeDao.update(employee,"1");
+        boolean status1 = employeeDao.update(employee,"2");
         Assert.assertEquals(true,status);
     }
 
     @Test
     public void delete() throws IOException {
-        boolean status=employeeDao.delete("1");
+        Employee employee = new Employee();
+        employee.setId("2");
+        employee.setName("Arpy");
+        employee.setDepartment("Java");
+
+        boolean status = employeeDao.create(employee);
         Assert.assertEquals(true,status);
+
+        boolean status1=employeeDao.delete("2");
+        Assert.assertEquals(true,status1);
     }
 }
