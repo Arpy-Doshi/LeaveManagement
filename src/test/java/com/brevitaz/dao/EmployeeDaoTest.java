@@ -73,10 +73,9 @@ public class EmployeeDaoTest {
         boolean status = employeeDao.create(employee);
         Assert.assertEquals(true,status);
 
-        Employee employee1 = new Employee();
         employee.setName("arpy");
         boolean status1 = employeeDao.update(employee,"2");
-        Assert.assertEquals(true,status);
+        Assert.assertEquals(true,status1);
     }
 
     @Test
