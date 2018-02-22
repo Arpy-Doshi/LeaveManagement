@@ -154,6 +154,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
     }
 
+
     @Override
     public List<LeaveApplication> checkRequest() throws IOException {
         SearchRequest request = new SearchRequest(INDEX_NAME);

@@ -70,6 +70,9 @@ public class LeaveApplicationController {
     }
 
 
+    // we can get this list from service using getAll method.
+
+
 /*
     @RequestMapping(value = "/get-by-date/{fromDate}/{toDate}" , method = RequestMethod.GET) // compare dates in service remaining.
     public List<LeaveApplication> getByDate(@PathVariable Date fromDate,@PathVariable Date toDate) throws IOException {
