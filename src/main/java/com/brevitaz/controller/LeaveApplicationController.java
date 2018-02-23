@@ -19,8 +19,6 @@ public class LeaveApplicationController {
     @Autowired
     private LeaveApplicationDao leaveApplicationDao;
 
-
-
     @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)//do count type of leave in service
     public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String eid) throws IOException {
         return leaveApplicationDao.request(leaveApplication,eid);

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/leave/policies")
+@RequestMapping("/leave-policies")
 public class LeavePolicyController {
 
     @Autowired
