@@ -43,10 +43,13 @@ public class EmployeeDaoTest {
         List<Employee> employees = employeeDao.getAll();
         int size = employees.size();
         Assert.assertEquals(3,size);
+
+        /*Assert.assertNotNull(employees);*/
+
     }
 
     @Test
-    public void get() throws IOException {
+    public void getByIdTest() throws IOException {
 
         Employee employee = new Employee();
         employee.setId("2");
@@ -74,8 +77,8 @@ public class EmployeeDaoTest {
         Assert.assertEquals(true,status);
 
         Employee employee1 = new Employee();
-        employee.setName("arpy");
-        boolean status1 = employeeDao.update(employee,"2");
+        employee1.setName("arpy");
+        boolean status1 = employeeDao.update(employee1,"2");
         Assert.assertEquals(true,status);
     }
 

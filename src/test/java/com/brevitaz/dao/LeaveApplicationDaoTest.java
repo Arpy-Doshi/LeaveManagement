@@ -49,37 +49,85 @@ public class LeaveApplicationDaoTest {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
         leaveApplication.setEmp_id("AA");
-        leaveApplication.setReason("pqr");
+        leaveApplication.setReason("xyz");
 
-        boolean status = leaveApplicationDao.updateRequest(leaveApplication,"AA","1");
-        Assert.assertEquals(true,status);
+        leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+
+
+        LeaveApplication leaveApplication1 = new LeaveApplication();
+        leaveApplication1.setReason("pqr");
+
+        boolean status1 = leaveApplicationDao.updateRequest(leaveApplication1,"AA","1");
+        Assert.assertEquals(true,status1);
     }
 
 
     @Test
     public void getAllTest() throws IOException {
-        List<LeaveApplication> leaveApplicatios = leaveApplicationDao.getAll();
-        int size = leaveApplicatios.size();
-        Assert.assertEquals(2,size);
-    }
 
-   /* @Test
-    public void get() throws IOException {
-        Employee employee = employeeDao.getById("1");
-        Assert.assertNotNull(employee);
-    }*/
+        LeaveApplication leaveApplication = new LeaveApplication();
+        leaveApplication.setId("1");
+        leaveApplication.setEmp_id("AA");
+        leaveApplication.setReason("xyz");
 
-  /*  @Test
-    public void update() throws IOException {
-        Employee employee = new Employee();
-        employee.setName("arpy");
-        boolean status = employeeDao.update(employee,"1");
+        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
         Assert.assertEquals(true,status);
+
+
+        List<LeaveApplication> leaveApplicatios = leaveApplicationDao.getAll();
+        Assert.assertNotNull(leaveApplicatios);
+       /* int size = leaveApplicatios.size();
+        Assert.assertEquals(2,size);*/
     }
-*/
-    /*@Test
-    public void delete() throws IOException {
-        boolean status = employeeDao.delete("1");
-        Assert.assertEquals(true, status);
-    }*/
+
+    @Test
+    public void checkStatus() throws IOException
+    {
+        LeaveApplication leaveApplication = new LeaveApplication();
+        leaveApplication.setId("1");
+        leaveApplication.setEmp_id("AA");
+        leaveApplication.setReason("xyz");
+
+        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        Assert.assertEquals(true,status);
+
+        LeaveApplication leaveApplication1 = leaveApplicationDao.checkStatus("AA","1");
+        Assert.assertNotNull(leaveApplication1);
+    }
+
+    @Test
+    public void getByIDTest()throws IOException
+    {
+        LeaveApplication leaveApplication = new LeaveApplication();
+        leaveApplication.setId("1");
+        leaveApplication.setEmp_id("AA");
+        leaveApplication.setReason("xyz");
+
+        boolean status = leaveApplicationDao.request(leaveApplication,"AA");
+        Assert.assertEquals(true,status);
+
+         List<LeaveApplication>leaveApplications = leaveApplicationDao.getById("AA");
+        Assert.assertNotNull(leaveApplications);
+    }
+
+    @Test
+    public void checkrRequestTest() throws IOException
+    {
+        LeaveApplication leaveApplication = new LeaveApplication();
+        leaveApplication.setId("1");
+        leaveApplication.setEmp_id("AA");
+        leaveApplication.setReason("xyz");
+        //leaveApplication.setStatus();
+
+        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        Assert.assertEquals(true,status);
+
+        LeaveApplication leaveApplication1 = new LeaveApplication();
+        leaveApplication.setId("1");
+        leaveApplication.setEmp_id("AA");
+        leaveApplication.setReason("xyz");
+
+        boolean status1 = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        Assert.assertEquals(true,status1);
+    }
 }
