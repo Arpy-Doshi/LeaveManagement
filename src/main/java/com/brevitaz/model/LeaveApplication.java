@@ -15,8 +15,6 @@ public class LeaveApplication
     private Date toDate;
     private Type type;
     private Status status;
-    private Time fromTime;
-    private Time toTime;
 
     private enum Type
     {
@@ -26,12 +24,12 @@ public class LeaveApplication
     {
         APPROVED,APPLIED,REJECTED;
     }
-    private enum Time
+   /* private enum Time
 
     {
         FIRST_HALF,SECOND_HALF,FULL_DAY;
     }
-
+*/
     public String getId() {
         return id;
     }
@@ -88,21 +86,6 @@ public class LeaveApplication
         this.status = status;
     }
 
-    public Time getFromTime() {
-        return fromTime;
-    }
-
-    public void setFromTime(Time fromTime) {
-        this.fromTime = fromTime;
-    }
-
-    public Time getToTime() {
-        return toTime;
-    }
-
-    public void setToTime(Time toTime) {
-        this.toTime = toTime;
-    }
 
     @Override
     public String toString() {
@@ -114,8 +97,6 @@ public class LeaveApplication
                 ", toDate=" + toDate +
                 ", type=" + type +
                 ", status=" + status +
-                ", fromTime=" + fromTime +
-                ", toTime=" + toTime +
                 '}';
     }
 }

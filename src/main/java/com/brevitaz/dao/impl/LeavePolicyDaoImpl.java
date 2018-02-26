@@ -59,7 +59,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
     @Override
     public boolean update(LeavePolicy leavePolicy,String id) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
                 id).doc(objectMapper.writeValueAsString(leavePolicy), XContentType.JSON);

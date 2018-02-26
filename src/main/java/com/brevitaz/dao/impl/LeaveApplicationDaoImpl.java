@@ -73,7 +73,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication,String id) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
                 id).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);

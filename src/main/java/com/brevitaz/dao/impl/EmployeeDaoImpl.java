@@ -76,8 +76,6 @@ public class EmployeeDaoImpl implements EmployeeDao
 
     @Override
     public boolean update(Employee employee,String id) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
-    public boolean update(Employee employee,String employeeId) throws IOException {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
