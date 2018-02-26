@@ -57,22 +57,22 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
 
 
     @Override
-    public boolean update(LeavePolicyRule leavePolicyRule,String leavePolicyRuleId) throws IOException {
+    public boolean update(LeavePolicyRule leavePolicyRule,String id) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
-                leavePolicyRuleId).doc(objectMapper.writeValueAsString(leavePolicyRule), XContentType.JSON);
+                id).doc(objectMapper.writeValueAsString(leavePolicyRule), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(updateRequest);
         System.out.println("Update: "+updateResponse);
         return true;
     }
 
     @Override
-    public boolean delete(String leavePolicyRuleId) throws IOException {
+    public boolean delete(String id) throws IOException {
         DeleteRequest request = new DeleteRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                leavePolicyRuleId);
+                id);
 
         DeleteResponse response = client.getClient().delete(request);
 
@@ -83,11 +83,11 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
     }
 
     @Override
-    public LeavePolicyRule getById(String leavePolicyRuleId) throws IOException {
+    public LeavePolicyRule getById(String id) throws IOException {
         GetRequest getRequest = new GetRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                leavePolicyRuleId);
+                id);
 
         GetResponse getResponse = client.getClient().get(getRequest);
 

@@ -11,9 +11,9 @@ import java.util.List;
 public interface LeavePolicyDao
 {
     public boolean create(LeavePolicy leavePolicy) throws IOException;
-    public boolean update(LeavePolicy leavePolicy,String leavePolicyId) throws IOException;
-    public boolean delete( String leavePolicyId) throws IOException;
-    public LeavePolicy getById(String leavePolicyId) throws IOException;
+    public boolean update(LeavePolicy leavePolicy,String id) throws IOException;
+    public boolean delete( String id) throws IOException;
+    public LeavePolicy getById(String id) throws IOException;
     public List<LeavePolicy> getAll() throws IOException;
 
 }
