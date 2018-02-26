@@ -30,7 +30,8 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
     private final String INDEX_NAME = "leave-policy";
     private final String TYPE_NAME = "doc";
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    ObjectMapper objectMapper;
 
 
     @Autowired
@@ -43,7 +44,6 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
                 TYPE_NAME,leavePolicyRule.getId()
         );
 
-        //ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(leavePolicyRule);
 
         request.source(json, XContentType.JSON);
@@ -58,7 +58,7 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
 
     @Override
     public boolean update(LeavePolicyRule leavePolicyRule,String leavePolicyRuleId) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
                 leavePolicyRuleId).doc(objectMapper.writeValueAsString(leavePolicyRule), XContentType.JSON);
@@ -91,7 +91,6 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
 
         GetResponse getResponse = client.getClient().get(getRequest);
 
-        ObjectMapper objectMapper = new ObjectMapper();
 
         LeavePolicyRule leavePolicyRule  = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicyRule.class);
 

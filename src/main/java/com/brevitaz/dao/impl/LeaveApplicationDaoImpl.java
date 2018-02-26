@@ -35,7 +35,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     private final String INDEX_NAME = "leave-application";
     private final String TYPE_NAME = "doc";
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    ObjectMapper objectMapper;
 
 
     @Autowired
@@ -47,7 +48,6 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 INDEX_NAME,
                 TYPE_NAME,leaveApplication.getId()
         );
-        //ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(leaveApplication);
         request.source(json, XContentType.JSON);
         IndexResponse indexResponse= client.getClient().index(request);
@@ -73,7 +73,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication,String employeeId,String leaveApplicationId) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
                 leaveApplicationId).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
@@ -227,10 +227,4 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         return leaveApplications;
 
     }
-
-
-
-
-
-
 }
