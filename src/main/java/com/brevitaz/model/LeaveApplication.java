@@ -9,7 +9,7 @@ import java.util.List;
 public class LeaveApplication
 {
     private String id;
-    private String emp_id;
+    private String employeeId;
     private String reason;
     private Date fromDate;
     private Date toDate;
@@ -40,11 +40,11 @@ public class LeaveApplication
     }
 
     public String getEmp_id() {
-        return emp_id;
+        return employeeId;
     }
 
     public void setEmp_id(String emp_id) {
-        this.emp_id = emp_id;
+        this.employeeId = emp_id;
     }
 
     public String getReason() {
@@ -107,7 +107,7 @@ public class LeaveApplication
     public String toString() {
         return "LeaveApplication{" +
                 "id='" + id + '\'' +
-                ", emp_id='" + emp_id + '\'' +
+                ", emp_id='" + employeeId + '\'' +
                 ", reason='" + reason + '\'' +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
