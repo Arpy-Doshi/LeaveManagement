@@ -19,37 +19,37 @@ public class LeaveApplicationController {
     @Autowired
     private LeaveApplicationDao leaveApplicationDao;
 
-    @RequestMapping(value = "/{eid}" , method = RequestMethod.POST)//do count type of leave in service
-    public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String eid) throws IOException {
-        return leaveApplicationDao.request(leaveApplication,eid);
+    @RequestMapping(value = "/{employee-id}" , method = RequestMethod.POST)//do count type of leave in service
+    public boolean request(@RequestBody LeaveApplication leaveApplication, @PathVariable String employeeId) throws IOException {
+        return leaveApplicationDao.request(leaveApplication,employeeId);
     }
 
-    @RequestMapping(value = "/{eid}/{lid}" , method = RequestMethod.DELETE)
-    public boolean cancelRequest(@PathVariable String eid , @PathVariable String lid) throws IOException {
-        return leaveApplicationDao.cancelRequest(eid,lid);
+    @RequestMapping(value = "/{employee-id}/{leave-application-id}" , method = RequestMethod.DELETE)
+    public boolean cancelRequest(@PathVariable String employeeId , @PathVariable String leaveApplicationId) throws IOException {
+        return leaveApplicationDao.cancelRequest(employeeId,leaveApplicationId);
     }
 
-    @RequestMapping(value = "/{eid}/{lid}", method = RequestMethod.PUT)
-    public boolean updateRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid , @PathVariable String lid) throws IOException {
-        return leaveApplicationDao.updateRequest(leaveApplication,eid,lid);
+    @RequestMapping(value = "/{employee-id}/{leave-application-id}", method = RequestMethod.PUT)
+    public boolean updateRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String employeeId , @PathVariable String leaveApplicationId) throws IOException {
+        return leaveApplicationDao.updateRequest(leaveApplication,employeeId,leaveApplicationId);
     }
 
 
 
-    @RequestMapping(value = "/{eid}/leave-status/{lid}" , method = RequestMethod.GET)
-    public LeaveApplication checkStatus(@PathVariable String eid,@PathVariable String lid) throws IOException {
-        return leaveApplicationDao.checkStatus(eid,lid);
+    @RequestMapping(value = "/{employee-id}/leave-status/{leave-application-id}" , method = RequestMethod.GET)
+    public LeaveApplication checkStatus(@PathVariable String employeeId,@PathVariable String leaveApplicationId) throws IOException {
+        return leaveApplicationDao.checkStatus(employeeId,leaveApplicationId);
     }
 
-    @RequestMapping(value = "/remaining-leaves/{eid}" , method = RequestMethod.GET)//remaining
-    public double checkBalance(@PathVariable String eid)
+    @RequestMapping(value = "/remaining-leaves/{employee-id}" , method = RequestMethod.GET)//remaining
+    public double checkBalance(@PathVariable String employeeId)
     {
         return 0;
     }
 
-    @RequestMapping(value = "/{eid}" , method = RequestMethod.GET) // personal record.
-    public List<LeaveApplication> getById( @PathVariable String eid) throws IOException {
-        return leaveApplicationDao.getById(eid);
+    @RequestMapping(value = "/{employee-id}" , method = RequestMethod.GET) // personal record.
+    public List<LeaveApplication> getById( @PathVariable String employeeId) throws IOException {
+        return leaveApplicationDao.getById(employeeId);
     }
 
     @RequestMapping(value = "/check-request" , method = RequestMethod.GET)
@@ -57,14 +57,14 @@ public class LeaveApplicationController {
         return leaveApplicationDao.checkRequest();
     }
 
-    @RequestMapping(value = "{eid}/approve-request/{lid}" , method = RequestMethod.POST)//status changes in service
-    public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid) throws IOException {
-        return leaveApplicationDao.approveRequest(leaveApplication,eid,lid);
+    @RequestMapping(value = "{employee-id}/approve-request/{leave-application-id}" , method = RequestMethod.POST)//status changes in service
+    public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String employeeId,@PathVariable String leaveApplicationId) throws IOException {
+        return leaveApplicationDao.approveRequest(leaveApplication,employeeId,leaveApplicationId);
     }
 
-    @RequestMapping(value = "{eid}/decline-request/{lid}" , method = RequestMethod.POST)//status changes in service
-    public boolean declineRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String eid,@PathVariable String lid) throws IOException {
-        return leaveApplicationDao.declineRequest(leaveApplication,eid,lid);
+    @RequestMapping(value = "{employee-id}/decline-request/{leave-application-id}" , method = RequestMethod.POST)//status changes in service
+    public boolean declineRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String employeeId,@PathVariable String leaveApplicationId) throws IOException {
+        return leaveApplicationDao.declineRequest(leaveApplication,employeeId,leaveApplicationId);
     }
 
     // we will get this list from service using getAll method.
