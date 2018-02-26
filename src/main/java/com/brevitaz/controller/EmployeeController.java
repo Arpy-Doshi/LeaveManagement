@@ -28,19 +28,19 @@ public class EmployeeController {
 
     }
 
-    @RequestMapping(value = "/{employee-id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public boolean update(@RequestBody Employee employee, @PathVariable String employeeId) throws IOException {
         return employeeDao.update(employee,employeeId);
 
     }
 
-    @RequestMapping(value = "/{employee-id}", method = {RequestMethod.DELETE})
+    @RequestMapping(value = "/{id}", method = {RequestMethod.DELETE})
     public boolean delete(@PathVariable String employeeId) throws IOException {
         return employeeDao.delete(employeeId);
 
     }
 
-    @RequestMapping(value = "/{employee-id}", method = {RequestMethod.GET})
+    @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
     public Employee getById(@PathVariable String employeeId) throws IOException {
         return employeeDao.getById(employeeId);
 
