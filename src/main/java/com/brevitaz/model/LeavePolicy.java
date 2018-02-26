@@ -1,10 +1,12 @@
 package com.brevitaz.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LeavePolicy
 {
     private String id;
-    private String name;
-    private String description;
+    private List<LeavePolicyRule> leavePolicyRules = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -14,28 +16,19 @@ public class LeavePolicy
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public List<LeavePolicyRule> getLeavePolicyRules() {
+        return leavePolicyRules;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLeavePolicyRules(List<LeavePolicyRule> leavePolicyRules) {
+        this.leavePolicyRules = leavePolicyRules;
     }
 
     @Override
     public String toString() {
         return "LeavePolicy{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", leavePolicyRules=" + leavePolicyRules +
                 '}';
     }
 }
