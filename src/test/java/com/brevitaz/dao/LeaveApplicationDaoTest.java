@@ -16,7 +16,7 @@ import java.util.List;
 @SpringBootTest
 public class LeaveApplicationDaoTest {
 
-    /*@Autowired
+    @Autowired
     LeaveApplicationDao leaveApplicationDao;
 
     @Test
@@ -39,7 +39,7 @@ public class LeaveApplicationDaoTest {
 
         leaveApplication.setReason("xyz");
 
-        boolean status = leaveApplicationDao.cancelRequest("BB","1");
+        boolean status = leaveApplicationDao.cancelRequest("1");
         Assert.assertEquals(true,status);
     }
 
@@ -51,13 +51,13 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
+        leaveApplicationDao.request(leaveApplication);
 
 
         LeaveApplication leaveApplication1 = new LeaveApplication();
         leaveApplication1.setReason("pqr");
 
-        boolean status1 = leaveApplicationDao.updateRequest(leaveApplication1,"AA","1");
+        boolean status1 = leaveApplicationDao.updateRequest(leaveApplication1,"1");
         Assert.assertEquals(true,status1);
     }
 
@@ -70,14 +70,14 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
+        boolean status = leaveApplicationDao.request(leaveApplication);
         Assert.assertEquals(true,status);
 
 
         List<LeaveApplication> leaveApplicatios = leaveApplicationDao.getAll();
         Assert.assertNotNull(leaveApplicatios);
-       *//* int size = leaveApplicatios.size();
-        Assert.assertEquals(2,size);*//*
+        int size = leaveApplicatios.size();
+        Assert.assertEquals(2,size);
     }
 
     @Test
@@ -88,10 +88,10 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
+        boolean status = leaveApplicationDao.request(leaveApplication);
         Assert.assertEquals(true,status);
 
-        LeaveApplication leaveApplication1 = leaveApplicationDao.checkStatus("AA","1");
+        LeaveApplication leaveApplication1 = leaveApplicationDao.checkStatus("1");
         Assert.assertNotNull(leaveApplication1);
     }
 
@@ -103,7 +103,7 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        boolean status = leaveApplicationDao.request(leaveApplication,"AA");
+        boolean status = leaveApplicationDao.request(leaveApplication);
         Assert.assertEquals(true,status);
 
          List<LeaveApplication>leaveApplications = leaveApplicationDao.getById("AA");
@@ -119,7 +119,7 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setReason("xyz");
        // leaveApplication.setStatus();
 
-        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
+        boolean status = leaveApplicationDao.request(leaveApplication);
         Assert.assertEquals(true,status);
 
         LeaveApplication leaveApplication1 = new LeaveApplication();
@@ -127,9 +127,8 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        boolean status1 = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
+        boolean status1 = leaveApplicationDao.request(leaveApplication1);
         Assert.assertEquals(true,status1);
     }
-*/
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/leaves")
+@RequestMapping("/leave-applications")
 public class LeaveApplicationController {
 
     @Autowired
@@ -57,12 +57,12 @@ public class LeaveApplicationController {
         return leaveApplicationDao.checkRequest();
     }
 
-    @RequestMapping(value = "approve-request/{id}" , method = RequestMethod.POST)//status changes in service
+    @RequestMapping(value = "/approve-request/{id}" , method = RequestMethod.PUT)//status changes in service
     public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id) throws IOException {
         return leaveApplicationDao.approveRequest(leaveApplication,id);
     }
 
-    @RequestMapping(value = "/decline-request/{id}" , method = RequestMethod.POST)//status changes in service
+    @RequestMapping(value = "/decline-request/{id}" , method = RequestMethod.DELETE)//status changes in service
     public boolean declineRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id) throws IOException {
         return leaveApplicationDao.declineRequest(leaveApplication,id);
     }
