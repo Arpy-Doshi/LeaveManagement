@@ -159,7 +159,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
-        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("status", "PENDING")));
+        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("status", "APPLIED")));
 
         request.source(sourceBuilder);
 

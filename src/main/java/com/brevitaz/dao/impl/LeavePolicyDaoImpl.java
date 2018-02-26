@@ -42,7 +42,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     public boolean create(LeavePolicy leavePolicy) throws IOException {
         IndexRequest request = new IndexRequest(
                 INDEX_NAME,
-                TYPE_NAME,""+leavePolicy.getId()
+                TYPE_NAME,leavePolicy.getId()
         );
 
         //ObjectMapper objectMapper = new ObjectMapper();

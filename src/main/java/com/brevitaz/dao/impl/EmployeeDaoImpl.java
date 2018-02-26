@@ -40,7 +40,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     public boolean create(Employee employee) throws IOException {
         IndexRequest request = new IndexRequest(
                 INDEX_NAME,
-                TYPE_NAME,""+employee.getId()
+                TYPE_NAME,employee.getId()
         );
 
         //ObjectMapper objectMapper = new ObjectMapper();

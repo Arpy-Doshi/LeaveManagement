@@ -24,9 +24,10 @@ public class LeaveApplication
     }
     private enum Status
     {
-        APPROVED,PENDING,DECLINED;
+        APPROVED,APPLIED,REJECTED;
     }
     private enum Time
+
     {
         FIRST_HALF,SECOND_HALF,FULL_DAY;
     }
@@ -39,12 +40,12 @@ public class LeaveApplication
         this.id = id;
     }
 
-    public String getEmp_id() {
+    public String getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmp_id(String emp_id) {
-        this.employeeId = emp_id;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getReason() {
@@ -107,7 +108,7 @@ public class LeaveApplication
     public String toString() {
         return "LeaveApplication{" +
                 "id='" + id + '\'' +
-                ", emp_id='" + employeeId + '\'' +
+                ", employeeId='" + employeeId + '\'' +
                 ", reason='" + reason + '\'' +
                 ", fromDate=" + fromDate +
                 ", toDate=" + toDate +
