@@ -111,7 +111,7 @@ public class LeaveApplicationDaoTest {
     }
 
     @Test
-    public void checkrRequestTest() throws IOException
+    public void checkRequestTest() throws IOException
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
