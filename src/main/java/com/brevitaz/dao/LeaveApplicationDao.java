@@ -10,21 +10,21 @@ import java.util.Date;
 import java.util.List;
 
 public interface LeaveApplicationDao {
-    public boolean request(LeaveApplication leaveApplication, String eid) throws IOException;
+    public boolean request(LeaveApplication leaveApplication, String employeeId) throws IOException;
 
-    public boolean cancelRequest(String eid, String lid) throws IOException;
+    public boolean cancelRequest(String employeeId, String leaveApplicationId) throws IOException;
 
-    public boolean updateRequest(LeaveApplication leaveApplication, String eid, String lid) throws IOException;
+    public boolean updateRequest(LeaveApplication leaveApplication, String employeeId, String leaveApplicationId) throws IOException;
 
-    public LeaveApplication checkStatus(String eid, String lid) throws IOException;
+    public LeaveApplication checkStatus(String employeeId, String leaveApplicationId) throws IOException;
 
-    public List<LeaveApplication> getById(String eid) throws IOException;
+    public List<LeaveApplication> getById(String employeeId) throws IOException;
 
     public List<LeaveApplication> checkRequest() throws IOException;
 
-    public boolean approveRequest(LeaveApplication leaveApplication, String eid, String lid) throws IOException;
+    public boolean approveRequest(LeaveApplication leaveApplication, String employeeId, String leaveApplicationId) throws IOException;
 
-    public boolean declineRequest(LeaveApplication leaveApplication, String eid, String lid) throws IOException;
+    public boolean declineRequest(LeaveApplication leaveApplication, String employeeId, String leaveApplicationId) throws IOException;
 
    /* public LeaveApplication getReport();
 */
