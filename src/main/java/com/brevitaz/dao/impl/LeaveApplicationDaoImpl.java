@@ -42,10 +42,10 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     ElasticConfig client;
 
     @Override
-    public boolean request(LeaveApplication leaveApplication,String eid) throws IOException {
+    public boolean request(LeaveApplication leaveApplication,String employeeId) throws IOException {
         IndexRequest request = new IndexRequest(
                 INDEX_NAME,
-                TYPE_NAME,""+leaveApplication.getId()
+                TYPE_NAME,leaveApplication.getId()
         );
         //ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(leaveApplication);
@@ -57,11 +57,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public boolean cancelRequest(String eid,String lid) throws IOException {
+    public boolean cancelRequest(String employeeId,String leaveApplicationId) throws IOException {
         DeleteRequest request = new DeleteRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                lid);
+                leaveApplicationId);
 
         DeleteResponse response = client.getClient().delete(request);
 
@@ -72,22 +72,22 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public boolean updateRequest(LeaveApplication leaveApplication,String eid,String lid) throws IOException {
+    public boolean updateRequest(LeaveApplication leaveApplication,String employeeId,String leaveApplicationId) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
-                lid).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
+                leaveApplicationId).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(request);
         System.out.println("Update: "+updateResponse);
         return true;
     }
 
     @Override
-    public LeaveApplication checkStatus(String eid,String lid) throws IOException {
+    public LeaveApplication checkStatus(String employeeId,String leaveApplicationId) throws IOException {
         GetRequest getRequest = new GetRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                lid);
+                leaveApplicationId);
 
         GetResponse getResponse = client.getClient().get(getRequest);
         LeaveApplication leaveApplication  = objectMapper.readValue(getResponse.getSourceAsString(),LeaveApplication.class);
@@ -97,7 +97,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
 
     @Override
-    public List<LeaveApplication> getById(String eid) throws IOException
+    public List<LeaveApplication> getById(String employeeId) throws IOException
     {
   /*      SearchRequest request = new SearchRequest(INDEX_NAME);
         request.types(TYPE_NAME);
@@ -130,7 +130,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
-        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("emp_id", eid)));
+        sourceBuilder.query(QueryBuilders.boolQuery().must(matchQuery("employeeId", employeeId)));
         request.source(sourceBuilder);
 
         SearchResponse response;
@@ -183,22 +183,22 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public boolean approveRequest(LeaveApplication leaveApplication,String eid,String lid) throws IOException {
+    public boolean approveRequest(LeaveApplication leaveApplication,String employeeId,String leaveApplicationId) throws IOException {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
-                lid).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
+                leaveApplicationId).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(request);
         System.out.println("Update: "+updateResponse);
         return true;
     }
 
     @Override
-    public boolean declineRequest(LeaveApplication leaveApplication,String eid,String lid) throws IOException {
+    public boolean declineRequest(LeaveApplication leaveApplication,String employeeId,String leaveApplicationId) throws IOException {
         DeleteRequest request = new DeleteRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                lid);
+                leaveApplicationId);
 
         DeleteResponse response = client.getClient().delete(request);
 
