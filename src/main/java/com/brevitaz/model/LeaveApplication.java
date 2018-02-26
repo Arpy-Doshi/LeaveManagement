@@ -28,7 +28,7 @@ public class LeaveApplication
     }
     private enum Time
     {
-        FIRSTHALF,SECONDHALF,FULLDAY;
+        FIRST_HALF,SECOND_HALF,FULL_DAY;
     }
 
     public String getId() {
