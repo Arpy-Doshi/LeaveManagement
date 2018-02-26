@@ -111,13 +111,13 @@ public class LeaveApplicationDaoTest {
     }
 
     @Test
-    public void checkrRequestTest() throws IOException
+    public void checkRequestTest() throws IOException
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
         leaveApplication.setEmp_id("AA");
         leaveApplication.setReason("xyz");
-        //leaveApplication.setStatus();
+       // leaveApplication.setStatus();
 
         boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
         Assert.assertEquals(true,status);
@@ -130,4 +130,6 @@ public class LeaveApplicationDaoTest {
         boolean status1 = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
         Assert.assertEquals(true,status1);
     }
+
+
 }

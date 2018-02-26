@@ -33,7 +33,6 @@ public class EmployeeDaoImpl implements EmployeeDao
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-
     @Autowired
     ElasticConfig client;
 
