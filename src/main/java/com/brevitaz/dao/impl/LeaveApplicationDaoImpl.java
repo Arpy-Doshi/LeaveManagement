@@ -20,6 +20,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -32,7 +33,9 @@ import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 @Repository
 public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 {
-    private final String INDEX_NAME = "leave-application";
+    @Value("${LeaveApplication-Index-Name}")
+    String indexName;
+
     private final String TYPE_NAME = "doc";
 
     @Autowired
@@ -45,7 +48,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     @Override
     public boolean request(LeaveApplication leaveApplication) throws IOException {
         IndexRequest request = new IndexRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,leaveApplication.getId()
         );
         String json = objectMapper.writeValueAsString(leaveApplication);
@@ -59,7 +62,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     @Override
     public boolean cancelRequest(String id) throws IOException {
         DeleteRequest request = new DeleteRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,
                 id);
 
@@ -75,7 +78,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     public boolean updateRequest(LeaveApplication leaveApplication,String id) throws IOException {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
-                INDEX_NAME,TYPE_NAME,
+                indexName,TYPE_NAME,
                 id).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(request);
         System.out.println("Update: "+updateResponse);
@@ -85,7 +88,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     @Override
     public LeaveApplication checkStatus(String id) throws IOException {
         GetRequest getRequest = new GetRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,
                 id);
 
@@ -125,7 +128,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
 
 */
-        SearchRequest request = new SearchRequest(INDEX_NAME);
+        SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
 
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
@@ -154,7 +157,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
     @Override
     public List<LeaveApplication> checkRequest() throws IOException {
-        SearchRequest request = new SearchRequest(INDEX_NAME);
+        SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
 
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
@@ -186,7 +189,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     public boolean approveRequest(LeaveApplication leaveApplication,String id) throws IOException {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
-                INDEX_NAME,TYPE_NAME,
+                indexName,TYPE_NAME,
                 id).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(request);
         System.out.println("Update: "+updateResponse);
@@ -196,7 +199,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     @Override
     public boolean declineRequest(LeaveApplication leaveApplication,String id) throws IOException {
         DeleteRequest request = new DeleteRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,
                 id);
 
@@ -212,7 +215,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     @Override
     public List<LeaveApplication> getAll() throws IOException {
         List<LeaveApplication> leaveApplications = new ArrayList<>();
-        SearchRequest request = new SearchRequest(INDEX_NAME);
+        SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.getClient().search(request);
         SearchHit[] hits = response.getHits().getHits();
@@ -227,10 +230,4 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         return leaveApplications;
 
     }
-
-
-
-
-
-
 }
