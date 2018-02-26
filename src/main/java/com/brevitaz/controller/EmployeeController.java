@@ -41,8 +41,8 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET})
-    public Employee getById(@PathVariable String employeeId) throws IOException {
-        return employeeDao.getById(employeeId);
+    public Employee getById(@PathVariable String id) throws IOException {
+        return employeeDao.getById(id);
 
     }
 }

@@ -23,10 +23,10 @@ public class LeaveApplicationDaoTest {
     public void requestTest() throws IOException {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
-        leaveApplication.setEmp_id("AA");
+        leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
         Assert.assertEquals(true,status);
     }
 
@@ -35,7 +35,7 @@ public class LeaveApplicationDaoTest {
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
-        leaveApplication.setEmp_id("BB");
+        leaveApplication.setEmployeeId("BB");
 
         leaveApplication.setReason("xyz");
 
@@ -48,10 +48,10 @@ public class LeaveApplicationDaoTest {
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
-        leaveApplication.setEmp_id("AA");
+        leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
 
 
         LeaveApplication leaveApplication1 = new LeaveApplication();
@@ -67,10 +67,10 @@ public class LeaveApplicationDaoTest {
 
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
-        leaveApplication.setEmp_id("AA");
+        leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
         Assert.assertEquals(true,status);
 
 
@@ -85,10 +85,10 @@ public class LeaveApplicationDaoTest {
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
-        leaveApplication.setEmp_id("AA");
+        leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
         Assert.assertEquals(true,status);
 
         LeaveApplication leaveApplication1 = leaveApplicationDao.checkStatus("AA","1");
@@ -100,7 +100,7 @@ public class LeaveApplicationDaoTest {
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
-        leaveApplication.setEmp_id("AA");
+        leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
         boolean status = leaveApplicationDao.request(leaveApplication,"AA");
@@ -115,19 +115,19 @@ public class LeaveApplicationDaoTest {
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
-        leaveApplication.setEmp_id("AA");
+        leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
        // leaveApplication.setStatus();
 
-        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        boolean status = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
         Assert.assertEquals(true,status);
 
         LeaveApplication leaveApplication1 = new LeaveApplication();
         leaveApplication.setId("1");
-        leaveApplication.setEmp_id("AA");
+        leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
 
-        boolean status1 = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmp_id());
+        boolean status1 = leaveApplicationDao.request(leaveApplication,leaveApplication.getEmployeeId());
         Assert.assertEquals(true,status1);
     }
 

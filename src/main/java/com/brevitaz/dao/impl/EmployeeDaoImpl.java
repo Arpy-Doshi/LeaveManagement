@@ -31,7 +31,8 @@ public class EmployeeDaoImpl implements EmployeeDao
     private final String INDEX_NAME = "lm_employee";
     private final String TYPE_NAME = "doc";
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Autowired
     ElasticConfig client;
@@ -43,7 +44,6 @@ public class EmployeeDaoImpl implements EmployeeDao
                 TYPE_NAME,employee.getId()
         );
 
-        //ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(employee);
 
         request.source(json, XContentType.JSON);
@@ -76,7 +76,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 
     @Override
     public boolean update(Employee employee,String employeeId) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
                 employeeId).doc(objectMapper.writeValueAsString(employee), XContentType.JSON);
@@ -101,15 +101,13 @@ public class EmployeeDaoImpl implements EmployeeDao
     }
 
     @Override
-    public Employee getById(String employeeId) throws IOException {
+    public Employee getById(String id) throws IOException {
         GetRequest getRequest = new GetRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                employeeId);
+                id);
 
         GetResponse getResponse = client.getClient().get(getRequest);
-
-        ObjectMapper objectMapper = new ObjectMapper();
 
         Employee employee  = objectMapper.readValue(getResponse.getSourceAsString(),Employee.class);
 
