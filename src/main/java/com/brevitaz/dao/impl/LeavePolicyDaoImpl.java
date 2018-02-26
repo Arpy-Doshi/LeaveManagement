@@ -20,6 +20,7 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -29,11 +30,13 @@ import java.util.List;
 @Repository
 public class LeavePolicyDaoImpl implements LeavePolicyDao
 {
-    private final String INDEX_NAME = "leave-policy";
+    @Value("${LeavePolicy-Index-Name}")
+    String indexName;
+
     private final String TYPE_NAME = "doc";
 
-    ObjectMapper objectMapper = new ObjectMapper();
-
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Autowired
     ElasticConfig client;
@@ -41,7 +44,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     @Override
     public boolean create(LeavePolicy leavePolicy) throws IOException {
         IndexRequest request = new IndexRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,leavePolicy.getId()
         );
 
@@ -61,7 +64,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     public boolean update(LeavePolicy leavePolicy,String id) throws IOException {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
-                INDEX_NAME,TYPE_NAME,
+                indexName,TYPE_NAME,
                 id).doc(objectMapper.writeValueAsString(leavePolicy), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(updateRequest);
         System.out.println("Update: "+updateResponse);
@@ -71,7 +74,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     @Override
     public boolean delete(String id) throws IOException {
         DeleteRequest request = new DeleteRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,
                 id);
 
@@ -86,7 +89,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     @Override
     public LeavePolicy getById(String id) throws IOException {
         GetRequest getRequest = new GetRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,
                 id);
 
@@ -103,7 +106,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     @Override
     public List<LeavePolicy> getAll() throws IOException {
         List<LeavePolicy> leavePolicies = new ArrayList<>();
-        SearchRequest request = new SearchRequest(INDEX_NAME);
+        SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.getClient().search(request);
         SearchHit[] hits = response.getHits().getHits();

@@ -18,6 +18,7 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
@@ -28,7 +29,9 @@ import java.util.List;
 public class EmployeeDaoImpl implements EmployeeDao
 {
 
-    private final String INDEX_NAME = "lm_employee";
+    @Value("${Employee-Index-Name}")
+    String indexName;
+
     private final String TYPE_NAME = "doc";
 
     @Autowired
@@ -40,7 +43,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     @Override
     public boolean create(Employee employee) throws IOException {
         IndexRequest request = new IndexRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,employee.getId()
         );
 
@@ -58,7 +61,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     @Override
     public List<Employee> getAll() throws IOException {
         List<Employee> employees = new ArrayList<>();
-        SearchRequest request = new SearchRequest(INDEX_NAME);
+        SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
         SearchResponse response = client.getClient().search(request);
         SearchHit[] hits = response.getHits().getHits();
@@ -78,7 +81,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     public boolean update(Employee employee,String id) throws IOException {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
-                INDEX_NAME,TYPE_NAME,
+                indexName,TYPE_NAME,
                 id).doc(objectMapper.writeValueAsString(employee), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(updateRequest);
         System.out.println("Update: "+updateResponse);
@@ -88,7 +91,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     @Override
     public boolean delete(String id) throws IOException {
         DeleteRequest request = new DeleteRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,
                 id);
 
@@ -103,7 +106,7 @@ public class EmployeeDaoImpl implements EmployeeDao
     @Override
     public Employee getById(String id) throws IOException {
         GetRequest getRequest = new GetRequest(
-                INDEX_NAME,
+                indexName,
                 TYPE_NAME,
                 id);
 
