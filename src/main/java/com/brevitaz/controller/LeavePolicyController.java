@@ -21,18 +21,18 @@ public class LeavePolicyController {
         return leavePolicyDao.create(leavePolicy);
     }
 
-    @RequestMapping(value = "/{leave-policy-id}" , method = RequestMethod.PUT)
-    public boolean update(@RequestBody LeavePolicy leavePolicy,@PathVariable String leavePolicyId) throws IOException {
-        return leavePolicyDao.update(leavePolicy,leavePolicyId);
+    @RequestMapping(value = "/{id}" , method = RequestMethod.PUT)
+    public boolean update(@RequestBody LeavePolicy leavePolicy,@PathVariable String id) throws IOException {
+        return leavePolicyDao.update(leavePolicy,id);
     }
-    @RequestMapping(value = "/{leave-policy-id}" , method = RequestMethod.DELETE)
-    public boolean delete(@PathVariable String leavePolicyId) throws IOException {
-        return leavePolicyDao.delete(leavePolicyId);
+    @RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
+    public boolean delete(@PathVariable String id) throws IOException {
+        return leavePolicyDao.delete(id);
     }
 
-    @RequestMapping(value = "/{leave-policy-id}" , method = RequestMethod.GET)
-    public LeavePolicy getById(@PathVariable String leavePolicyId) throws IOException {
-        return leavePolicyDao.getById(leavePolicyId);
+    @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
+    public LeavePolicy getById(@PathVariable String id) throws IOException {
+        return leavePolicyDao.getById(id);
     }
 
     @RequestMapping(value = "" , method = RequestMethod.GET)

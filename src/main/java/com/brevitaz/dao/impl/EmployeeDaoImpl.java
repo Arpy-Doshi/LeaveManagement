@@ -75,22 +75,24 @@ public class EmployeeDaoImpl implements EmployeeDao
     }
 
     @Override
+    public boolean update(Employee employee,String id) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
     public boolean update(Employee employee,String employeeId) throws IOException {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
-                employeeId).doc(objectMapper.writeValueAsString(employee), XContentType.JSON);
+                id).doc(objectMapper.writeValueAsString(employee), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(updateRequest);
         System.out.println("Update: "+updateResponse);
         return true;
     }
 
     @Override
-    public boolean delete(String employeeId) throws IOException {
+    public boolean delete(String id) throws IOException {
         DeleteRequest request = new DeleteRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                employeeId);
+                id);
 
         DeleteResponse response = client.getClient().delete(request);
 

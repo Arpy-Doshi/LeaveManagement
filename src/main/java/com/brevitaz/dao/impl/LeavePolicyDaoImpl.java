@@ -32,8 +32,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     private final String INDEX_NAME = "leave-policy";
     private final String TYPE_NAME = "doc";
 
-    @Autowired
-    ObjectMapper objectMapper;
+    ObjectMapper objectMapper = new ObjectMapper();
 
 
     @Autowired
@@ -59,22 +58,22 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
 
     @Override
-    public boolean update(LeavePolicy leavePolicy,String leavePolicyId) throws IOException {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    public boolean update(LeavePolicy leavePolicy,String id) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 INDEX_NAME,TYPE_NAME,
-                leavePolicyId).doc(objectMapper.writeValueAsString(leavePolicy), XContentType.JSON);
+                id).doc(objectMapper.writeValueAsString(leavePolicy), XContentType.JSON);
         UpdateResponse updateResponse = client.getClient().update(updateRequest);
         System.out.println("Update: "+updateResponse);
         return true;
     }
 
     @Override
-    public boolean delete(String leavePolicyId) throws IOException {
+    public boolean delete(String id) throws IOException {
         DeleteRequest request = new DeleteRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                leavePolicyId);
+                id);
 
         DeleteResponse response = client.getClient().delete(request);
 
@@ -85,11 +84,11 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     }
 
     @Override
-    public LeavePolicy getById(String leavePolicyId) throws IOException {
+    public LeavePolicy getById(String id) throws IOException {
         GetRequest getRequest = new GetRequest(
                 INDEX_NAME,
                 TYPE_NAME,
-                leavePolicyId);
+                id);
 
         GetResponse getResponse = client.getClient().get(getRequest);
 
