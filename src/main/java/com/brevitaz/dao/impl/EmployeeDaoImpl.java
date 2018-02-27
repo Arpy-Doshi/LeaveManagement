@@ -1,5 +1,6 @@
 package com.brevitaz.dao.impl;
 
+import com.brevitaz.config.Config;
 import com.brevitaz.config.ElasticConfig;
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.model.Employee;
@@ -35,11 +36,14 @@ public class EmployeeDaoImpl implements EmployeeDao
     private final String TYPE_NAME = "doc";
 
     @Autowired
+    Config config;
+
+   /* @Autowired
     ObjectMapper objectMapper;
 
     @Autowired
     ElasticConfig client;
-
+*/
     @Override
     public boolean create(Employee employee) throws IOException {
         IndexRequest request = new IndexRequest(
@@ -47,11 +51,11 @@ public class EmployeeDaoImpl implements EmployeeDao
                 TYPE_NAME,employee.getId()
         );
 
-        String json = objectMapper.writeValueAsString(employee);
+        String json = config.getObjectMapper().writeValueAsString(employee);
 
         request.source(json, XContentType.JSON);
 
-        IndexResponse indexResponse= client.getClient().index(request);
+        IndexResponse indexResponse= config.getClient().index(request);
 
         System.out.println(indexResponse);
 
@@ -63,14 +67,14 @@ public class EmployeeDaoImpl implements EmployeeDao
         List<Employee> employees = new ArrayList<>();
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        SearchResponse response = client.getClient().search(request);
+        SearchResponse response = config.getClient().search(request);
         SearchHit[] hits = response.getHits().getHits();
 
         Employee employee;
 
         for (SearchHit hit : hits)
         {
-            employee = objectMapper.readValue(hit.getSourceAsString(), Employee.class);
+            employee = config.getObjectMapper().readValue(hit.getSourceAsString(), Employee.class);
             employees.add(employee);
         }
         return employees;
@@ -79,11 +83,11 @@ public class EmployeeDaoImpl implements EmployeeDao
 
     @Override
     public boolean update(Employee employee,String id) throws IOException {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 indexName,TYPE_NAME,
-                id).doc(objectMapper.writeValueAsString(employee), XContentType.JSON);
-        UpdateResponse updateResponse = client.getClient().update(updateRequest);
+                id).doc(config.getObjectMapper().writeValueAsString(employee), XContentType.JSON);
+        UpdateResponse updateResponse = config.getClient().update(updateRequest);
         System.out.println("Update: "+updateResponse);
         return true;
     }
@@ -95,7 +99,7 @@ public class EmployeeDaoImpl implements EmployeeDao
                 TYPE_NAME,
                 id);
 
-        DeleteResponse response = client.getClient().delete(request);
+        DeleteResponse response = config.getClient().delete(request);
 
         System.out.println(response.status());
 
@@ -110,9 +114,9 @@ public class EmployeeDaoImpl implements EmployeeDao
                 TYPE_NAME,
                 id);
 
-        GetResponse getResponse = client.getClient().get(getRequest);
+        GetResponse getResponse = config.getClient().get(getRequest);
 
-        Employee employee  = objectMapper.readValue(getResponse.getSourceAsString(),Employee.class);
+        Employee employee  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),Employee.class);
 
 
         System.out.println(employee);

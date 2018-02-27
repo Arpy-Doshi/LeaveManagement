@@ -1,5 +1,6 @@
 package com.brevitaz.dao.impl;
 
+import com.brevitaz.config.Config;
 import com.brevitaz.config.ElasticConfig;
 import com.brevitaz.dao.LeaveApplicationDao;
 import com.brevitaz.model.LeaveApplication;
@@ -39,21 +40,24 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     private final String TYPE_NAME = "doc";
 
     @Autowired
+    Config config;
+
+    /*@Autowired
     ObjectMapper objectMapper;
 
 
     @Autowired
     ElasticConfig client;
-
+*/
     @Override
     public boolean request(LeaveApplication leaveApplication) throws IOException {
         IndexRequest request = new IndexRequest(
                 indexName,
                 TYPE_NAME,leaveApplication.getId()
         );
-        String json = objectMapper.writeValueAsString(leaveApplication);
+        String json = config.getObjectMapper().writeValueAsString(leaveApplication);
         request.source(json, XContentType.JSON);
-        IndexResponse indexResponse  = client.getClient().index(request);
+        IndexResponse indexResponse  = config.getClient().index(request);
         System.out.println(indexResponse);
 
         return true;
@@ -66,7 +70,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 TYPE_NAME,
                 id);
 
-        DeleteResponse response = client.getClient().delete(request);
+        DeleteResponse response = config.getClient().delete(request);
 
         System.out.println(response.status());
 
@@ -76,11 +80,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
     @Override
     public boolean updateRequest(LeaveApplication leaveApplication,String id) throws IOException {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
                 indexName,TYPE_NAME,
-                id).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
-        UpdateResponse updateResponse = client.getClient().update(request);
+                id).doc(config.getObjectMapper().writeValueAsString(leaveApplication), XContentType.JSON);
+        UpdateResponse updateResponse = config.getClient().update(request);
         System.out.println("Update: "+updateResponse);
         return true;
     }
@@ -92,8 +96,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 TYPE_NAME,
                 id);
 
-        GetResponse getResponse = client.getClient().get(getRequest);
-        LeaveApplication leaveApplication  = objectMapper.readValue(getResponse.getSourceAsString(),LeaveApplication.class);
+        GetResponse getResponse = config.getClient().get(getRequest);
+        LeaveApplication leaveApplication  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeaveApplication.class);
         System.out.println(leaveApplication.getStatus());
         return leaveApplication;
     }
@@ -139,14 +143,14 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         SearchResponse response;
         List<LeaveApplication> leaveApplications=new ArrayList<>();
 
-        response = client.getClient().search(request);
+        response = config.getClient().search(request);
 
         SearchHit[] hits = response.getHits().getHits();
 
         LeaveApplication leaveApplication;
         for (SearchHit hit : hits)
         {
-            leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+            leaveApplication = config.getObjectMapper().readValue(hit.getSourceAsString(), LeaveApplication.class);
             leaveApplications.add(leaveApplication);
         }
 
@@ -169,14 +173,14 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         SearchResponse response;
         List<LeaveApplication> leaveApplications=new ArrayList<>();
 
-        response = client.getClient().search(request);
+        response = config.getClient().search(request);
 
         SearchHit[] hits = response.getHits().getHits();
 
         LeaveApplication leaveApplication;
         for (SearchHit hit : hits)
         {
-            leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+            leaveApplication = config.getObjectMapper().readValue(hit.getSourceAsString(), LeaveApplication.class);
             leaveApplications.add(leaveApplication);
         }
 
@@ -187,11 +191,11 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
     @Override
     public boolean approveRequest(LeaveApplication leaveApplication,String id) throws IOException {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest request = new UpdateRequest(
                 indexName,TYPE_NAME,
-                id).doc(objectMapper.writeValueAsString(leaveApplication), XContentType.JSON);
-        UpdateResponse updateResponse = client.getClient().update(request);
+                id).doc(config.getObjectMapper().writeValueAsString(leaveApplication), XContentType.JSON);
+        UpdateResponse updateResponse = config.getClient().update(request);
         System.out.println("Update: "+updateResponse);
         return true;
     }
@@ -203,7 +207,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 TYPE_NAME,
                 id);
 
-        DeleteResponse response = client.getClient().delete(request);
+        DeleteResponse response = config.getClient().delete(request);
 
         System.out.println(response.status());
 
@@ -217,14 +221,14 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
         List<LeaveApplication> leaveApplications = new ArrayList<>();
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        SearchResponse response = client.getClient().search(request);
+        SearchResponse response = config.getClient().search(request);
         SearchHit[] hits = response.getHits().getHits();
 
         LeaveApplication leaveApplication;
 
         for (SearchHit hit : hits)
         {
-            leaveApplication = objectMapper.readValue(hit.getSourceAsString(), LeaveApplication.class);
+            leaveApplication = config.getObjectMapper().readValue(hit.getSourceAsString(), LeaveApplication.class);
             leaveApplications.add(leaveApplication);
         }
         return leaveApplications;

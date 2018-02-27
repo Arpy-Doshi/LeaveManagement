@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ObjectMapperConfig
 {
-    private ObjectMapper objectMapper;
+   /* private ObjectMapper objectMapper;
 
     @Bean
     public ObjectMapper getObjectMapper()
@@ -25,5 +25,5 @@ public class ObjectMapperConfig
 
     public void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-    }
+    }*/
 }

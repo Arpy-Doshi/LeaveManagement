@@ -1,5 +1,6 @@
 package com.brevitaz.dao.impl;
 
+import com.brevitaz.config.Config;
 import com.brevitaz.config.ElasticConfig;
 import com.brevitaz.dao.LeavePolicyRuleDao;
 import com.brevitaz.model.LeavePolicyRule;
@@ -34,10 +35,15 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
     private final String TYPE_NAME = "doc";
 
     @Autowired
+    Config config;
+
+/*
+    @Autowired
     ObjectMapper objectMapper;
 
     @Autowired
     ElasticConfig client;
+*/
 
     @Override
     public boolean create(LeavePolicyRule leavePolicyRule) throws IOException {
@@ -46,11 +52,11 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
                 TYPE_NAME,leavePolicyRule.getId()
         );
 
-        String json = objectMapper.writeValueAsString(leavePolicyRule);
+        String json = config.getObjectMapper().writeValueAsString(leavePolicyRule);
 
         request.source(json, XContentType.JSON);
 
-        IndexResponse indexResponse= client.getClient().index(request);
+        IndexResponse indexResponse= config.getClient().index(request);
 
         System.out.println(indexResponse);
 
@@ -60,11 +66,11 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
 
     @Override
     public boolean update(LeavePolicyRule leavePolicyRule,String id) throws IOException {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 indexName,TYPE_NAME,
-                id).doc(objectMapper.writeValueAsString(leavePolicyRule), XContentType.JSON);
-        UpdateResponse updateResponse = client.getClient().update(updateRequest);
+                id).doc(config.getObjectMapper().writeValueAsString(leavePolicyRule), XContentType.JSON);
+        UpdateResponse updateResponse = config.getClient().update(updateRequest);
         System.out.println("Update: "+updateResponse);
         return true;
     }
@@ -76,7 +82,7 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
                 TYPE_NAME,
                 id);
 
-        DeleteResponse response = client.getClient().delete(request);
+        DeleteResponse response = config.getClient().delete(request);
 
         System.out.println(response.status());
 
@@ -91,10 +97,10 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
                 TYPE_NAME,
                 id);
 
-        GetResponse getResponse = client.getClient().get(getRequest);
+        GetResponse getResponse = config.getClient().get(getRequest);
 
 
-        LeavePolicyRule leavePolicyRule  = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicyRule.class);
+        LeavePolicyRule leavePolicyRule  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeavePolicyRule.class);
 
 
         return leavePolicyRule;
@@ -105,14 +111,14 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
         List<LeavePolicyRule> leavePolicyRules = new ArrayList<>();
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        SearchResponse response = client.getClient().search(request);
+        SearchResponse response = config.getClient().search(request);
         SearchHit[] hits = response.getHits().getHits();
 
         LeavePolicyRule leavePolicyRule;
 
         for (SearchHit hit : hits)
         {
-            leavePolicyRule = objectMapper.readValue(hit.getSourceAsString(), LeavePolicyRule.class);
+            leavePolicyRule = config.getObjectMapper().readValue(hit.getSourceAsString(), LeavePolicyRule.class);
             leavePolicyRules.add(leavePolicyRule);
         }
         return leavePolicyRules;

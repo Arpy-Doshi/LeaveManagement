@@ -1,5 +1,6 @@
 package com.brevitaz.dao.impl;
 
+import com.brevitaz.config.Config;
 import com.brevitaz.config.ElasticConfig;
 import com.brevitaz.dao.LeavePolicyDao;
 import com.brevitaz.model.Employee;
@@ -36,11 +37,14 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     private final String TYPE_NAME = "doc";
 
     @Autowired
+    Config config;
+
+    /*@Autowired
     ObjectMapper objectMapper;
 
     @Autowired
     ElasticConfig client;
-
+*/
     @Override
     public boolean create(LeavePolicy leavePolicy) throws IOException {
         IndexRequest request = new IndexRequest(
@@ -48,11 +52,11 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 TYPE_NAME,leavePolicy.getId()
         );
 
-        String json = objectMapper.writeValueAsString(leavePolicy);
+        String json = config.getObjectMapper().writeValueAsString(leavePolicy);
 
         request.source(json, XContentType.JSON);
 
-        IndexResponse indexResponse= client.getClient().index(request);
+        IndexResponse indexResponse= config.getClient().index(request);
 
         System.out.println(indexResponse);
 
@@ -62,11 +66,11 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 
     @Override
     public boolean update(LeavePolicy leavePolicy,String id) throws IOException {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
         UpdateRequest updateRequest = new UpdateRequest(
                 indexName,TYPE_NAME,
-                id).doc(objectMapper.writeValueAsString(leavePolicy), XContentType.JSON);
-        UpdateResponse updateResponse = client.getClient().update(updateRequest);
+                id).doc(config.getObjectMapper().writeValueAsString(leavePolicy), XContentType.JSON);
+        UpdateResponse updateResponse = config.getClient().update(updateRequest);
         System.out.println("Update: "+updateResponse);
         return true;
     }
@@ -78,7 +82,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 TYPE_NAME,
                 id);
 
-        DeleteResponse response = client.getClient().delete(request);
+        DeleteResponse response = config.getClient().delete(request);
 
         System.out.println(response.status());
 
@@ -93,10 +97,10 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
                 TYPE_NAME,
                 id);
 
-        GetResponse getResponse = client.getClient().get(getRequest);
+        GetResponse getResponse = config.getClient().get(getRequest);
 
 
-        LeavePolicy leavePolicy  = objectMapper.readValue(getResponse.getSourceAsString(),LeavePolicy.class);
+        LeavePolicy leavePolicy  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeavePolicy.class);
 
 
         System.out.println(leavePolicy);
@@ -108,14 +112,14 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
         List<LeavePolicy> leavePolicies = new ArrayList<>();
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        SearchResponse response = client.getClient().search(request);
+        SearchResponse response = config.getClient().search(request);
         SearchHit[] hits = response.getHits().getHits();
 
         LeavePolicy leavePolicy;
 
         for (SearchHit hit : hits)
         {
-            leavePolicy = objectMapper.readValue(hit.getSourceAsString(), LeavePolicy.class);
+            leavePolicy = config.getObjectMapper().readValue(hit.getSourceAsString(), LeavePolicy.class);
             leavePolicies.add(leavePolicy);
         }
         return leavePolicies;

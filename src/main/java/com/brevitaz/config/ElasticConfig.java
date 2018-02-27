@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ElasticConfig {
+/*
 
 
     public RestHighLevelClient getClient() {
@@ -30,6 +31,7 @@ public class ElasticConfig {
     }
 
     private RestHighLevelClient client;
+*/
 
 
 
