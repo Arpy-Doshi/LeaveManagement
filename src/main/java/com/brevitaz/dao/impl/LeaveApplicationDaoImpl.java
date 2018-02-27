@@ -98,7 +98,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
         GetResponse getResponse = config.getClient().get(getRequest);
         LeaveApplication leaveApplication  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeaveApplication.class);
-        System.out.println(leaveApplication.getStatus());
+        //System.out.println(leaveApplication.getStatus());
         return leaveApplication;
     }
 

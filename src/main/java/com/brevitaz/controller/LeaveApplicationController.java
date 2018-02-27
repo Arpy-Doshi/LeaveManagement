@@ -57,7 +57,7 @@ public class LeaveApplicationController {
         return leaveApplicationDao.checkRequest();
     }
 
-    @RequestMapping(value = "/approve-request/{id}" , method = RequestMethod.PUT)//status changes in service
+    @RequestMapping(value = "/approve-request/{id}" , method = RequestMethod.PUT)//status changes in service & request should be POST or PUT?
     public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id) throws IOException {
         return leaveApplicationDao.approveRequest(leaveApplication,id);
     }
