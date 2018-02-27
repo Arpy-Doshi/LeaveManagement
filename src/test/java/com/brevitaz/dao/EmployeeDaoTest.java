@@ -18,19 +18,16 @@ public class EmployeeDaoTest {
     EmployeeDao employeeDao;
 
     @Test
-    public void createTest()  {
+    public void createTest() throws IOException {
         Employee employee = new Employee();
         employee.setId("1");
         employee.setName("Yash");
         employee.setDepartment("Java");
+        employeeDao.create(employee);
 
-        try {
-            boolean status = employeeDao.create(employee);
-            Assert.assertEquals(true, status);
-        }
-        catch(IOException e){
-         e.printStackTrace();
-        }
+        Employee employee1 = employeeDao.getById("1");
+        Assert.assertEquals(employee.getName(),employee1.getName());
+        employeeDao.delete("1");
     }
 
     @Test

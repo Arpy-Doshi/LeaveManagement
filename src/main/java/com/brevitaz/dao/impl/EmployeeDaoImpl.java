@@ -5,6 +5,7 @@ import com.brevitaz.config.ElasticConfig;
 import com.brevitaz.dao.EmployeeDao;
 import com.brevitaz.model.Employee;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -17,6 +18,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,81 +47,134 @@ public class EmployeeDaoImpl implements EmployeeDao
     ElasticConfig client;
 */
     @Override
-    public boolean create(Employee employee) throws IOException {
+    public boolean create(Employee employee) {
         IndexRequest request = new IndexRequest(
                 indexName,
                 TYPE_NAME,employee.getId()
         );
 
-        String json = config.getObjectMapper().writeValueAsString(employee);
-
-        request.source(json, XContentType.JSON);
-
-        IndexResponse indexResponse= config.getClient().index(request);
-
-        System.out.println(indexResponse);
-
-        return true;
+        try {
+            String json = config.getObjectMapper().writeValueAsString(employee);
+            request.source(json, XContentType.JSON);
+            IndexResponse indexResponse = config.getClient().index(request);
+            System.out.println(indexResponse);
+            if(indexResponse.status() == RestStatus.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public List<Employee> getAll() throws IOException {
+    public List<Employee> getAll()  {
         List<Employee> employees = new ArrayList<>();
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        SearchResponse response = config.getClient().search(request);
-        SearchHit[] hits = response.getHits().getHits();
 
-        Employee employee;
+        try {
+            SearchResponse response = config.getClient().search(request);
+            SearchHit[] hits = response.getHits().getHits();
 
-        for (SearchHit hit : hits)
-        {
-            employee = config.getObjectMapper().readValue(hit.getSourceAsString(), Employee.class);
-            employees.add(employee);
+            Employee employee;
+
+            for (SearchHit hit : hits)
+            {
+                employee = config.getObjectMapper().readValue(hit.getSourceAsString(), Employee.class);
+                employees.add(employee);
+            }
+
+            if(response.status() == RestStatus.OK)
+            {
+                return employees;
+            }
+            else
+            {
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return employees;
-
+        return null;
     }
 
     @Override
-    public boolean update(Employee employee,String id) throws IOException {
+    public boolean update(Employee employee,String id){
         config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        UpdateRequest updateRequest = new UpdateRequest(
-                indexName,TYPE_NAME,
-                id).doc(config.getObjectMapper().writeValueAsString(employee), XContentType.JSON);
-        UpdateResponse updateResponse = config.getClient().update(updateRequest);
-        System.out.println("Update: "+updateResponse);
-        return true;
+        try {
+            UpdateRequest updateRequest = new UpdateRequest(
+                    indexName,TYPE_NAME,
+                    id).doc(config.getObjectMapper().writeValueAsString(employee), XContentType.JSON);
+            UpdateResponse updateResponse = config.getClient().update(updateRequest);
+            System.out.println("Update: "+updateResponse);
+            if(updateResponse.status() == RestStatus.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public boolean delete(String id) throws IOException {
+    public boolean delete(String id) {
         DeleteRequest request = new DeleteRequest(
                 indexName,
                 TYPE_NAME,
                 id);
 
-        DeleteResponse response = config.getClient().delete(request);
-
-        System.out.println(response.status());
-
-        System.out.println(response);
-        return true;
+        try {
+            DeleteResponse response = config.getClient().delete(request);
+            if(response.status() == RestStatus.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public Employee getById(String id) throws IOException {
+    public Employee getById(String id)  {
         GetRequest getRequest = new GetRequest(
                 indexName,
                 TYPE_NAME,
                 id);
 
-        GetResponse getResponse = config.getClient().get(getRequest);
 
-        Employee employee  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),Employee.class);
+        try {
+            GetResponse getResponse = config.getClient().get(getRequest);
 
+            Employee employee = config.getObjectMapper().readValue(getResponse.getSourceAsString(),Employee.class);
+            if(getResponse.isExists())
+            {
+                return employee;
+            }
+            else
+            {
+                return null;
+            }
 
-        System.out.println(employee);
-        return employee;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //System.out.println(employee);
+        return null;
     }
 }
