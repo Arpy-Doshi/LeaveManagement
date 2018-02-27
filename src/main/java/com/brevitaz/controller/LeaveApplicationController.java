@@ -52,7 +52,7 @@ public class LeaveApplicationController {
         return leaveApplicationDao.getById(employeeId);
     }
 
-    @RequestMapping(value = "/check-request" , method = RequestMethod.GET)
+    @RequestMapping(value = "/check-requests" , method = RequestMethod.GET)
     public List<LeaveApplication> checkRequest() throws IOException {
         return leaveApplicationDao.checkRequest();
     }
