@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,9 @@ public class Config
     private RestHighLevelClient client;
     private ObjectMapper objectMapper;
 
+    @Value("${Host-Name}")
+    String hostName;
+
     @Bean
     public RestHighLevelClient getClient() {
 
@@ -21,7 +25,7 @@ public class Config
         {
             client = new RestHighLevelClient
                     (RestClient.builder(
-                            new HttpHost("localhost", 9200, "http")));
+                            new HttpHost(hostName, 9200, "http")));
             return client;
         }
         else
