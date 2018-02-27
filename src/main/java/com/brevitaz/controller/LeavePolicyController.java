@@ -17,26 +17,26 @@ public class LeavePolicyController {
     LeavePolicyDao leavePolicyDao;
 
     @RequestMapping(value = "" , method = RequestMethod.POST)
-    public boolean create(@RequestBody LeavePolicy leavePolicy) throws IOException {
+    public boolean create(@RequestBody LeavePolicy leavePolicy){
         return leavePolicyDao.create(leavePolicy);
     }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.PUT)
-    public boolean update(@RequestBody LeavePolicy leavePolicy,@PathVariable String id) throws IOException {
+    public boolean update(@RequestBody LeavePolicy leavePolicy,@PathVariable String id){
         return leavePolicyDao.update(leavePolicy,id);
     }
     @RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
-    public boolean delete(@PathVariable String id) throws IOException {
+    public boolean delete(@PathVariable String id) {
         return leavePolicyDao.delete(id);
     }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET)
-    public LeavePolicy getById(@PathVariable String id) throws IOException {
+    public LeavePolicy getById(@PathVariable String id) {
         return leavePolicyDao.getById(id);
     }
 
     @RequestMapping(value = "" , method = RequestMethod.GET)
-    public List<LeavePolicy> getAll() throws IOException {
+    public List<LeavePolicy> getAll()  {
         return leavePolicyDao.getAll();
     }
 
