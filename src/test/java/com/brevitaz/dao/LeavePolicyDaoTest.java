@@ -19,6 +19,7 @@ import java.util.List;
 public class LeavePolicyDaoTest {
     @Autowired
     LeavePolicyDao leavePolicyDao;
+/*
 
     @Test
     public void createTest() {
@@ -172,5 +173,6 @@ public class LeavePolicyDaoTest {
         }
 
     }
+*/
 
 }

@@ -54,6 +54,8 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 */
     @Override
     public boolean request(LeaveApplication leaveApplication) {
+        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
         IndexRequest request = new IndexRequest(
                 indexName,
                 TYPE_NAME,leaveApplication.getId()

@@ -48,6 +48,8 @@ public class EmployeeDaoImpl implements EmployeeDao
 */
     @Override
     public boolean create(Employee employee) {
+        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
         IndexRequest request = new IndexRequest(
                 indexName,
                 TYPE_NAME,employee.getId()

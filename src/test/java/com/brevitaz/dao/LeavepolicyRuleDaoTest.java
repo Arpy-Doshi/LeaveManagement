@@ -16,7 +16,7 @@ import java.util.List;
 public class LeavepolicyRuleDaoTest {
     @Autowired
     LeavePolicyRuleDao leavePolicyRuleDao;
-
+/*
     @Test
     public void createTest() {
         LeavePolicyRule leavePolicyRule = new LeavePolicyRule();
@@ -121,5 +121,5 @@ public class LeavepolicyRuleDaoTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
     }

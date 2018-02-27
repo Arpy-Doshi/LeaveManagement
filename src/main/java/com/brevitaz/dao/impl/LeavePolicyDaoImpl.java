@@ -48,6 +48,8 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
 */
     @Override
     public boolean create(LeavePolicy leavePolicy)  {
+        config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
         IndexRequest request = new IndexRequest(
                 indexName,
                 TYPE_NAME,leavePolicy.getId()
