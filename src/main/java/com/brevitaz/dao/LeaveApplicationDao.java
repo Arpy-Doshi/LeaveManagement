@@ -10,26 +10,26 @@ import java.util.Date;
 import java.util.List;
 
 public interface LeaveApplicationDao {
-    public boolean request(LeaveApplication leaveApplication) throws IOException;
+    public boolean request(LeaveApplication leaveApplication);
 
-    public boolean cancelRequest(String id) throws IOException;
+    public boolean cancelRequest(String id);
 
-    public boolean updateRequest(LeaveApplication leaveApplication, String id) throws IOException;
+    public boolean updateRequest(LeaveApplication leaveApplication, String id) ;
 
-    public LeaveApplication checkStatus( String id) throws IOException;
+    public LeaveApplication checkStatus( String id);
 
-    public List<LeaveApplication> getById(String employeeId) throws IOException;
+    public List<LeaveApplication> getById(String employeeId);
 
-    public List<LeaveApplication> checkRequest() throws IOException;
+    public List<LeaveApplication> checkRequest() ;
 
-    public boolean approveRequest(LeaveApplication leaveApplication,String id) throws IOException;
+    public boolean approveRequest(LeaveApplication leaveApplication,String id);
 
-    public boolean declineRequest(LeaveApplication leaveApplication, String id) throws IOException;
+    public boolean declineRequest(LeaveApplication leaveApplication, String id);
 
    /* public LeaveApplication getReport();
 */
 
-    public List<LeaveApplication> getAll() throws IOException;
+    public List<LeaveApplication> getAll();
 }
 
 
