@@ -41,7 +41,6 @@ public class EmployeeDaoTest {
         employee.setName("dffbf");
         employee.setDepartment("ndfhfjd");
 
-
         try {
            boolean status = employeeDao.create(employee);
             Assert.assertEquals(true,status);
@@ -66,7 +65,6 @@ public class EmployeeDaoTest {
 
         employee.setDepartment("Java");
 
-
         try {
             boolean  status = employeeDao.create(employee);
             Assert.assertEquals(true,status);
@@ -74,15 +72,12 @@ public class EmployeeDaoTest {
             e.printStackTrace();
         }
 
-
-
         try {
             Employee  employee1 = employeeDao.getById("2");
             Assert.assertNotNull(employee1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Test
@@ -94,14 +89,12 @@ public class EmployeeDaoTest {
 
         employee.setDepartment("Java");
 
-
         try {
             boolean status = employeeDao.create(employee);
             Assert.assertEquals(true,status);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         Employee employee1 = new Employee();
         employee1.setName("arpy");
@@ -112,7 +105,6 @@ public class EmployeeDaoTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Test
@@ -130,14 +122,11 @@ public class EmployeeDaoTest {
             e.printStackTrace();
         }
 
-
-
         try {
             boolean  status1 = employeeDao.delete("2");
             Assert.assertEquals(true,status1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
