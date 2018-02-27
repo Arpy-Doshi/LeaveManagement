@@ -14,13 +14,13 @@ public interface LeaveApplicationDao {
 
     public boolean cancelRequest(String id);
 
-    public boolean updateRequest(LeaveApplication leaveApplication, String id);
+    public boolean updateRequest(LeaveApplication leaveApplication, String id) ;
 
     public LeaveApplication checkStatus( String id);
 
     public List<LeaveApplication> getById(String employeeId);
 
-    public List<LeaveApplication> checkRequest();
+    public List<LeaveApplication> checkRequest() ;
 
     public boolean approveRequest(LeaveApplication leaveApplication,String id);
 

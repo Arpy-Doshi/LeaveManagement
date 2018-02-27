@@ -16,14 +16,14 @@ public class EmployeeController {
     EmployeeDao employeeDao;
 
     @RequestMapping(method = RequestMethod.POST)
-    public boolean create(@RequestBody Employee employee){
+    public boolean create(@RequestBody Employee employee) {
         return employeeDao.create(employee);
 
     }
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Employee> getAll(){
+    public List<Employee> getAll()  {
         return employeeDao.getAll();
 
     }
