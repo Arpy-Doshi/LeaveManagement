@@ -5,6 +5,7 @@ import com.brevitaz.config.ElasticConfig;
 import com.brevitaz.dao.LeavePolicyRuleDao;
 import com.brevitaz.model.LeavePolicyRule;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -17,6 +18,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,82 +48,148 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
 */
 
     @Override
-    public boolean create(LeavePolicyRule leavePolicyRule) throws IOException {
+    public boolean create(LeavePolicyRule leavePolicyRule)  {
         IndexRequest request = new IndexRequest(
                 indexName,
                 TYPE_NAME,leavePolicyRule.getId()
         );
 
-        String json = config.getObjectMapper().writeValueAsString(leavePolicyRule);
+        try {
+            String json = config.getObjectMapper().writeValueAsString(leavePolicyRule);
 
-        request.source(json, XContentType.JSON);
+            request.source(json, XContentType.JSON);
 
-        IndexResponse indexResponse= config.getClient().index(request);
+            IndexResponse indexResponse = config.getClient().index(request);
+            System.out.println(indexResponse);
 
-        System.out.println(indexResponse);
+            if (indexResponse.status() == RestStatus.OK) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        return true;
+        return false;
     }
 
 
     @Override
-    public boolean update(LeavePolicyRule leavePolicyRule,String id) throws IOException {
+    public boolean update(LeavePolicyRule leavePolicyRule,String id) {
         config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        UpdateRequest updateRequest = new UpdateRequest(
-                indexName,TYPE_NAME,
-                id).doc(config.getObjectMapper().writeValueAsString(leavePolicyRule), XContentType.JSON);
-        UpdateResponse updateResponse = config.getClient().update(updateRequest);
-        System.out.println("Update: "+updateResponse);
-        return true;
+        UpdateRequest updateRequest = null;
+        try {
+            updateRequest = new UpdateRequest(
+                    indexName, TYPE_NAME,
+                    id).doc(config.getObjectMapper().writeValueAsString(leavePolicyRule), XContentType.JSON);
+            UpdateResponse updateResponse = config.getClient().update(updateRequest);
+
+            System.out.println("Update: " + updateResponse);
+            if (updateResponse.status() == RestStatus.OK) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+            catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     @Override
-    public boolean delete(String id) throws IOException {
+    public boolean delete(String id)  {
         DeleteRequest request = new DeleteRequest(
                 indexName,
                 TYPE_NAME,
                 id);
 
-        DeleteResponse response = config.getClient().delete(request);
+        try {
+            DeleteResponse response = config.getClient().delete(request);
 
-        System.out.println(response.status());
+            System.out.println(response.status());
 
-        System.out.println(response);
+            System.out.println(response);
+
+            if(response.status() == RestStatus.OK)
+            {
+             return true;
+            }
+            else
+            {
+                return false;
+            }
+         }
+         catch (IOException e) {
+            e.printStackTrace();
+         }
+
         return true;
     }
 
     @Override
-    public LeavePolicyRule getById(String id) throws IOException {
+    public LeavePolicyRule getById(String id) {
         GetRequest getRequest = new GetRequest(
                 indexName,
                 TYPE_NAME,
                 id);
 
-        GetResponse getResponse = config.getClient().get(getRequest);
+        try {
+            GetResponse getResponse = config.getClient().get(getRequest);
 
+             LeavePolicyRule leavePolicyRule = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeavePolicyRule.class);
 
-        LeavePolicyRule leavePolicyRule  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeavePolicyRule.class);
+            if(getResponse.isExists())
+            {
+                return leavePolicyRule;
+            }
+            else
+            {
+                return null;
+            }
 
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return leavePolicyRule;
+        return null;
     }
 
     @Override
-    public List<LeavePolicyRule> getAll() throws IOException {
+    public List<LeavePolicyRule> getAll(){
         List<LeavePolicyRule> leavePolicyRules = new ArrayList<>();
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        SearchResponse response = config.getClient().search(request);
-        SearchHit[] hits = response.getHits().getHits();
 
-        LeavePolicyRule leavePolicyRule;
+        try {
+            SearchResponse response = config.getClient().search(request);
+            SearchHit[] hits = response.getHits().getHits();
 
-        for (SearchHit hit : hits)
-        {
-            leavePolicyRule = config.getObjectMapper().readValue(hit.getSourceAsString(), LeavePolicyRule.class);
-            leavePolicyRules.add(leavePolicyRule);
+            LeavePolicyRule leavePolicyRule;
+
+            for (SearchHit hit : hits)
+            {
+                leavePolicyRule = config.getObjectMapper().readValue(hit.getSourceAsString(), LeavePolicyRule.class);
+                leavePolicyRules.add(leavePolicyRule);
+            }
+
+            if(response.status() == RestStatus.OK)
+            {
+                return leavePolicyRules;
+            }
+            else
+            {
+                return null;
+            }
+
         }
-        return leavePolicyRules;
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
 
     }
 

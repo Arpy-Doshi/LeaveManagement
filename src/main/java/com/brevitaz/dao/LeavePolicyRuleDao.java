@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface LeavePolicyRuleDao
 {
-    public boolean create(LeavePolicyRule leavePolicyRule) throws IOException;
-    public boolean update(LeavePolicyRule leavePolicyRule,String id) throws IOException;
-    public boolean delete( String id) throws IOException;
-    public LeavePolicyRule getById(String id) throws IOException;
-    public List<LeavePolicyRule> getAll() throws IOException;
+    public boolean create(LeavePolicyRule leavePolicyRule);
+    public boolean update(LeavePolicyRule leavePolicyRule,String id);
+    public boolean delete( String id);
+    public LeavePolicyRule getById(String id);
+    public List<LeavePolicyRule> getAll();
 
 }

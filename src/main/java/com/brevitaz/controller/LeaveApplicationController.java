@@ -20,24 +20,24 @@ public class LeaveApplicationController {
     private LeaveApplicationDao leaveApplicationDao;
 
     @RequestMapping(method = RequestMethod.POST)//do count type of leave in service
-    public boolean request(@RequestBody LeaveApplication leaveApplication) throws IOException {
+    public boolean request(@RequestBody LeaveApplication leaveApplication){
         return leaveApplicationDao.request(leaveApplication);
     }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.DELETE)
-    public boolean cancelRequest(@PathVariable String id) throws IOException {
+    public boolean cancelRequest(@PathVariable String id){
         return leaveApplicationDao.cancelRequest(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public boolean updateRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id) throws IOException {
+    public boolean updateRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id){
         return leaveApplicationDao.updateRequest(leaveApplication,id);
     }
 
 
 
     @RequestMapping(value = "/leave-status/{id}" , method = RequestMethod.GET)
-    public LeaveApplication checkStatus(@PathVariable String id) throws IOException {
+    public LeaveApplication checkStatus(@PathVariable String id){
         return leaveApplicationDao.checkStatus(id);
     }
 
@@ -48,33 +48,33 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "/{employeeId}" , method = RequestMethod.GET) // personal record.
-    public List<LeaveApplication> getById( @PathVariable String employeeId) throws IOException {
+    public List<LeaveApplication> getById( @PathVariable String employeeId){
         return leaveApplicationDao.getById(employeeId);
     }
 
     @RequestMapping(value = "/check-requests" , method = RequestMethod.GET)
-    public List<LeaveApplication> checkRequest() throws IOException {
+    public List<LeaveApplication> checkRequest(){
         return leaveApplicationDao.checkRequest();
     }
 
     @RequestMapping(value = "/approve-request/{id}" , method = RequestMethod.PUT)//status changes in service & request should be POST or PUT?
-    public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id) throws IOException {
+    public boolean approveRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id){
         return leaveApplicationDao.approveRequest(leaveApplication,id);
     }
 
     @RequestMapping(value = "/decline-request/{id}" , method = RequestMethod.DELETE)//status changes in service
-    public boolean declineRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id) throws IOException {
+    public boolean declineRequest(@RequestBody LeaveApplication leaveApplication,@PathVariable String id){
         return leaveApplicationDao.declineRequest(leaveApplication,id);
     }
 
     // we will get this list from service using getAll method.
     @RequestMapping(value = "/get-by-date/{fromDate}/{toDate}" , method = RequestMethod.GET)
-    public List<LeaveApplication> getByDate(@PathVariable Date fromDate,@PathVariable Date toDate) throws IOException {
+    public List<LeaveApplication> getByDate(@PathVariable Date fromDate,@PathVariable Date toDate){
         return leaveApplicationDao.getAll();
     }
 
     @RequestMapping(value = "" , method = RequestMethod.GET) // all record.
-    public List<LeaveApplication> getAll() throws IOException {
+    public List<LeaveApplication> getAll(){
         return leaveApplicationDao.getAll();
     }
 

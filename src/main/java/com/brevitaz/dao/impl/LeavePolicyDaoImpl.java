@@ -19,6 +19,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,83 +47,144 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
     ElasticConfig client;
 */
     @Override
-    public boolean create(LeavePolicy leavePolicy) throws IOException {
+    public boolean create(LeavePolicy leavePolicy)  {
         IndexRequest request = new IndexRequest(
                 indexName,
                 TYPE_NAME,leavePolicy.getId()
         );
 
-        String json = config.getObjectMapper().writeValueAsString(leavePolicy);
+        try {
+            String json = config.getObjectMapper().writeValueAsString(leavePolicy);
 
-        request.source(json, XContentType.JSON);
+            request.source(json, XContentType.JSON);
 
-        IndexResponse indexResponse= config.getClient().index(request);
+            IndexResponse indexResponse = config.getClient().index(request);
+            System.out.println(indexResponse);
+            if (indexResponse.status() == RestStatus.OK) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        System.out.println(indexResponse);
-
-        return true;
+        return false;
     }
 
 
     @Override
-    public boolean update(LeavePolicy leavePolicy,String id) throws IOException {
+    public boolean update(LeavePolicy leavePolicy,String id) {
         config.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        UpdateRequest updateRequest = new UpdateRequest(
-                indexName,TYPE_NAME,
-                id).doc(config.getObjectMapper().writeValueAsString(leavePolicy), XContentType.JSON);
-        UpdateResponse updateResponse = config.getClient().update(updateRequest);
-        System.out.println("Update: "+updateResponse);
-        return true;
+
+        try {
+            UpdateRequest updateRequest = new UpdateRequest(
+                    indexName,TYPE_NAME,
+                    id).doc(config.getObjectMapper().writeValueAsString(leavePolicy), XContentType.JSON);
+
+
+            UpdateResponse updateResponse = config.getClient().update(updateRequest);
+            System.out.println(updateResponse);
+
+            if(updateResponse.status() == RestStatus.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     @Override
-    public boolean delete(String id) throws IOException {
+    public boolean delete(String id)  {
         DeleteRequest request = new DeleteRequest(
                 indexName,
                 TYPE_NAME,
                 id);
+        try {
+            DeleteResponse response = config.getClient().delete(request);
+            System.out.println(response);
+            if(response.status() == RestStatus.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        DeleteResponse response = config.getClient().delete(request);
-
-        System.out.println(response.status());
-
-        System.out.println(response);
-        return true;
+        return false;
     }
 
     @Override
-    public LeavePolicy getById(String id) throws IOException {
+    public LeavePolicy getById(String id) {
         GetRequest getRequest = new GetRequest(
                 indexName,
                 TYPE_NAME,
                 id);
+        try {
+            GetResponse getResponse= config.getClient().get(getRequest);
+            LeavePolicy leavePolicy  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeavePolicy.class);
 
-        GetResponse getResponse = config.getClient().get(getRequest);
+            if(getResponse.isExists())
+            {
+                return leavePolicy;
+            }
+            else
+            {
+                return null;
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        LeavePolicy leavePolicy  = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeavePolicy.class);
-
-
-        System.out.println(leavePolicy);
-        return leavePolicy;
+        return null;
     }
 
     @Override
-    public List<LeavePolicy> getAll() throws IOException {
+    public List<LeavePolicy> getAll()  {
         List<LeavePolicy> leavePolicies = new ArrayList<>();
         SearchRequest request = new SearchRequest(indexName);
         request.types(TYPE_NAME);
-        SearchResponse response = config.getClient().search(request);
-        SearchHit[] hits = response.getHits().getHits();
+        try {
+            SearchResponse response = config.getClient().search(request);
 
-        LeavePolicy leavePolicy;
+            SearchHit[] hits = response.getHits().getHits();
 
-        for (SearchHit hit : hits)
-        {
-            leavePolicy = config.getObjectMapper().readValue(hit.getSourceAsString(), LeavePolicy.class);
-            leavePolicies.add(leavePolicy);
+
+            LeavePolicy leavePolicy;
+            for (SearchHit hit : hits) {
+                leavePolicy = config.getObjectMapper().readValue(hit.getSourceAsString(), LeavePolicy.class);
+                leavePolicies.add(leavePolicy);
+            }
+                if(response.status() == RestStatus.OK)
+                {
+                    return leavePolicies;
+                }
+                else
+                {
+                    return null;
+                }
+
+         }
+         catch (IOException e) {
+            e.printStackTrace();
         }
-        return leavePolicies;
+        return null;
 
     }
 
