@@ -18,112 +18,71 @@ public class EmployeeDaoTest {
     EmployeeDao employeeDao;
 
     @Test
-    public void createTest() throws IOException {
+    public void createTest() {
         Employee employee = new Employee();
-        employee.setId("1");
+        employee.setId("11");
         employee.setName("Yash");
         employee.setDepartment("Java");
         employeeDao.create(employee);
 
-        Employee employee1 = employeeDao.getById("1");
-        Assert.assertEquals(employee.getName(),employee1.getName());
-        employeeDao.delete("1");
+        Employee employee1 = employeeDao.getById("11");
+        Assert.assertEquals(employee1.getName(), employee.getName());
+        employeeDao.delete("11");
     }
 
     @Test
     public void getAllTest() {
-
         Employee employee = new Employee();
-        employee.setId("3");
-        employee.setName("dffbf");
-        employee.setDepartment("ndfhfjd");
+        employee.setId("11");
+        employee.setName("Yash");
+        employee.setDepartment("Java");
+        employeeDao.create(employee);
 
-        try {
-           boolean status = employeeDao.create(employee);
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            List<Employee>  employees = employeeDao.getAll();
-            Assert.assertNotNull(employees);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<Employee> employees = employeeDao.getAll();
+        Assert.assertNotNull(employees);
+        employeeDao.delete("11");
     }
 
     @Test
-    public void getByIdTest()  {
-
+    public void getByIdTest() {
         Employee employee = new Employee();
-        employee.setId("2");
-        employee.setName("Arpy");
-
+        employee.setId("11");
+        employee.setName("Yash");
         employee.setDepartment("Java");
+        employeeDao.create(employee);
 
-        try {
-            boolean  status = employeeDao.create(employee);
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Employee  employee1 = employeeDao.getById("2");
-            Assert.assertNotNull(employee1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Employee employee1 = employeeDao.getById("11");
+        Assert.assertNotNull(employee1);
+        //employeeDao.delete("11");
     }
 
     @Test
     public void update() {
-
         Employee employee = new Employee();
-        employee.setId("2");
-        employee.setName("pr");
-
+        employee.setId("11");
+        employee.setName("Yash");
         employee.setDepartment("Java");
-
-        try {
-            boolean status = employeeDao.create(employee);
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        employeeDao.create(employee);
 
         Employee employee1 = new Employee();
-        employee1.setName("arpy");
+        employee1.setName("Arpy");
+        employeeDao.update(employee1,"11");
+        Employee employee3 = employeeDao.getById("11");
+        Assert.assertEquals(employee3.getName(),employee1.getName());
+        //employeeDao.delete("11");
 
-        try {
-            boolean status1 = employeeDao.update(employee1,"2");
-            Assert.assertEquals(true,status1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
-    public void delete()  {
+    public void delete() {
         Employee employee = new Employee();
-        employee.setId("2");
-        employee.setName("Arpy");
+        employee.setId("11");
+        employee.setName("Yash");
         employee.setDepartment("Java");
+        employeeDao.create(employee);
 
-
-        try {
-            boolean status = employeeDao.create(employee);
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            boolean  status1 = employeeDao.delete("2");
-            Assert.assertEquals(true,status1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Employee employee1 = employeeDao.getById("11");
+        Assert.assertEquals(employee1.getName(), employee.getName());
+        employeeDao.delete("11");
     }
 }
