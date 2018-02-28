@@ -88,21 +88,23 @@ public class LeaveApplicationDaoTest {
         leaveApplicationDao.cancelRequest("11");
     }
 
-    /*@Test
+    @Test
     public void checkStatus()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
+        //leaveApplication.setStatus("APPLIED");
         leaveApplicationDao.request(leaveApplication);
 
-        boolean status = leaveApplicationDao.request(leaveApplication);
-        Assert.assertEquals(true,status);
+        LeaveApplication leaveApplication1 = leaveApplicationDao.checkStatus("11");
+        Assert.assertNotNull(leaveApplication1);
 
         leaveApplicationDao.cancelRequest("11");
     }
 
+    /*
     @Test
     public void getByIDTest()
     {
