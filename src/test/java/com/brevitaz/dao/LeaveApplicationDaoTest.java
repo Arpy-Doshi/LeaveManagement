@@ -28,22 +28,23 @@ public class LeaveApplicationDaoTest {
         leaveApplicationDao.request(leaveApplication);
 
         LeaveApplication leaveApplication1 = leaveApplicationDao.getById("11");
-
         Assert.assertEquals(leaveApplication1.getEmployeeId(),leaveApplication.getEmployeeId());
+
         leaveApplicationDao.cancelRequest("11");
     }
 
     @Test
     public void cancelRequestTest()
-    {  LeaveApplication leaveApplication = new LeaveApplication();
+    {   LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
         leaveApplicationDao.request(leaveApplication);
 
-        boolean status = leaveApplicationDao.cancelRequest("11");
-        Assert.assertEquals(true,status);
         leaveApplicationDao.cancelRequest("11");
+
+        LeaveApplication leaveApplication1 = leaveApplicationDao.getById("11");
+        Assert.assertNull(leaveApplication1);
 
     }
 
@@ -59,12 +60,11 @@ public class LeaveApplicationDaoTest {
         leaveApplicationDao.request(leaveApplication);
 
         LeaveApplication leaveApplication1 = new LeaveApplication();
-        leaveApplication1.setReason("ABCDEF");
+        leaveApplication1.setReason("bvhfjdkc,dgrifdksmnghtikfdlnjfhgy");
 
         leaveApplicationDao.updateRequest(leaveApplication1,"11");
 
-        LeaveApplication leaveApplication2 = leaveApplicationDao.getById("11");
-
+        LeaveApplication leaveApplication2 = leaveApplicationDao.getById("11") ;
         Assert.assertEquals(leaveApplication2.getReason(),leaveApplication1.getReason());
 
         leaveApplicationDao.cancelRequest("11");
@@ -156,7 +156,7 @@ public class LeaveApplicationDaoTest {
     }
 
     @Test
-    public void declineRequestTest() throws IOException// TODO: remaining
+    public void approveRequesttest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("11");
@@ -167,13 +167,12 @@ public class LeaveApplicationDaoTest {
         leaveApplicationDao.request(leaveApplication);
 
         LeaveApplication leaveApplication1 = new LeaveApplication();
-        leaveApplication1.setStatus(Status.REJECTED);
+        leaveApplication1.setStatus(Status.APPROVED);
 
         leaveApplicationDao.updateRequest(leaveApplication1,"11");
 
-        LeaveApplication leaveApplication2 = leaveApplicationDao.getById("11");
-
-        Assert.assertEquals(leaveApplication2.getReason(),leaveApplication1.getReason());
+        LeaveApplication leaveApplication2 = leaveApplicationDao.getById("11") ;
+        Assert.assertEquals(leaveApplication2.getStatus(),leaveApplication1.getStatus());
 
         leaveApplicationDao.cancelRequest("11");
 
