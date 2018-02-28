@@ -150,7 +150,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
                 return null;
             }
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }
