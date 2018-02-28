@@ -34,13 +34,6 @@ public class LeaveApplicationController {
         return leaveApplicationDao.updateRequest(leaveApplication,id);
     }
 
-
-
-    @RequestMapping(value = "/leave-status/{id}" , method = RequestMethod.GET)
-    public LeaveApplication checkStatus(@PathVariable String id) {
-        return leaveApplicationDao.checkStatus(id);
-    }
-
     @RequestMapping(value = "/remaining-leaves/{employeeId}" , method = RequestMethod.GET)//remaining
     public double checkBalance(@PathVariable String employeeId)
     {
@@ -53,7 +46,7 @@ public class LeaveApplicationController {
     }
 
     @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // for single leave.
-    public List<LeaveApplication> getById( @PathVariable String id)  {
+    public LeaveApplication getById( @PathVariable String id)  {
         return leaveApplicationDao.getById(id);
     }
 
