@@ -104,7 +104,7 @@ public class LeaveApplicationDaoTest {
         leaveApplicationDao.cancelRequest("11");
     }
 
-    /*
+
     @Test
     public void getByIDTest()
     {
