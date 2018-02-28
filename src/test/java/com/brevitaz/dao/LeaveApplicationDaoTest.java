@@ -178,4 +178,26 @@ public class LeaveApplicationDaoTest {
 
     }
 
+    @Test
+    public void declineRequestTest()
+    {
+        LeaveApplication leaveApplication = new LeaveApplication();
+        leaveApplication.setId("11");
+        leaveApplication.setEmployeeId("AA");
+        leaveApplication.setReason("xyz");
+        leaveApplication.setStatus(Status.APPLIED);
+        leaveApplicationDao.request(leaveApplication);
+
+        LeaveApplication leaveApplication1 = new LeaveApplication();
+        leaveApplication1.setStatus(Status.REJECTED);
+
+        leaveApplicationDao.updateRequest(leaveApplication1,"11");
+
+        leaveApplicationDao.cancelRequest("11");
+
+        LeaveApplication leaveApplication2 = leaveApplicationDao.getById("11");
+        Assert.assertNull(leaveApplication2);
+    }
+
+
 }
