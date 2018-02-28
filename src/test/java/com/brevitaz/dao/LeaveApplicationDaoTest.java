@@ -181,6 +181,6 @@ public class LeaveApplicationDaoTest {
     @Test
     public void getByDateTest()// TODO: Remaining
     {
-        
+
     }
 }
