@@ -19,60 +19,50 @@ public class LeaveApplicationDaoTest {
     @Autowired
     LeaveApplicationDao leaveApplicationDao;
 
- /*   @Test
+    @Test
     public void requestTest()  {
         LeaveApplication leaveApplication = new LeaveApplication();
-        leaveApplication.setId("1");
+        leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
         leaveApplicationDao.request(leaveApplication);
 
-        LeaveApplication leaveApplication1 = leaveApplicationDao.
+        boolean status = leaveApplicationDao.request(leaveApplication);
+        Assert.assertEquals(true,status);
 
+        leaveApplicationDao.cancelRequest("11");
     }
-*/
-    /*
+
     @Test
     public void cancelRequestTest()
-    {
-        LeaveApplication leaveApplication = new LeaveApplication();
-        leaveApplication.setId("1");
-        leaveApplication.setEmployeeId("BB");
-
+    {  LeaveApplication leaveApplication = new LeaveApplication();
+        leaveApplication.setId("11");
+        leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
+        leaveApplicationDao.request(leaveApplication);
 
-        try {
-            boolean status = leaveApplicationDao.cancelRequest("1");
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean status = leaveApplicationDao.cancelRequest("11");
+        Assert.assertEquals(true,status);
+        leaveApplicationDao.cancelRequest("11");
+
     }
 
-    @Test
+     @Test
     public void updateRequestTest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
-        leaveApplication.setId("1");
+        leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
-
-        try {
-            leaveApplicationDao.request(leaveApplication);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        leaveApplicationDao.request(leaveApplication);
 
         LeaveApplication leaveApplication1 = new LeaveApplication();
-        leaveApplication1.setReason("pqr");
+        leaveApplication1.setEmployeeId("22");
 
-        try {
-             boolean status1 = leaveApplicationDao.updateRequest(leaveApplication1,"1");
-            Assert.assertEquals(true,status1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean status = leaveApplicationDao.updateRequest(leaveApplication1,"11");
+        Assert.assertEquals(true,status);
+
+        leaveApplicationDao.cancelRequest("11");
 
     }
 
@@ -80,71 +70,44 @@ public class LeaveApplicationDaoTest {
     public void getAllTest() {
 
         LeaveApplication leaveApplication = new LeaveApplication();
-        leaveApplication.setId("1");
+        leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
+        leaveApplicationDao.request(leaveApplication);
 
-        try {
-            boolean status = leaveApplicationDao.request(leaveApplication);
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            List<LeaveApplication> leaveApplicatios = leaveApplicationDao.getAll();
-            Assert.assertNotNull(leaveApplicatios);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<LeaveApplication> leaveApplications = leaveApplicationDao.getAll();
+        int size = leaveApplications.size();
+        leaveApplicationDao.cancelRequest("11");
     }
 
-    @Test
+    /*@Test
     public void checkStatus()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
-        leaveApplication.setId("1");
+        leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
+        leaveApplicationDao.request(leaveApplication);
 
-        try {
-            boolean status = leaveApplicationDao.request(leaveApplication);
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean status = leaveApplicationDao.request(leaveApplication);
+        Assert.assertEquals(true,status);
 
-        try {
-            LeaveApplication leaveApplication1 = leaveApplicationDao.checkStatus("1");
-            Assert.assertNotNull(leaveApplication1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        leaveApplicationDao.cancelRequest("11");
     }
 
     @Test
     public void getByIDTest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
-        leaveApplication.setId("1");
+        leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
+        leaveApplicationDao.request(leaveApplication);
 
-        try {
-            boolean status = leaveApplicationDao.request(leaveApplication);
-            Assert.assertEquals(true,status);
+        boolean status = leaveApplicationDao.request(leaveApplication);
+        Assert.assertEquals(true,status);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            List<LeaveApplication> leaveApplications = leaveApplicationDao.getById("AA");
-            Assert.assertNotNull(leaveApplications);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        leaveApplicationDao.cancelRequest("11");
     }
 
 
@@ -152,21 +115,15 @@ public class LeaveApplicationDaoTest {
     public void checkRequestTest() throws IOException// TODO: remaining
     {
         LeaveApplication leaveApplication = new LeaveApplication();
-        leaveApplication.setId("1");
+        leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
-       // leaveApplication.setStatus();
+        leaveApplicationDao.request(leaveApplication);
 
         boolean status = leaveApplicationDao.request(leaveApplication);
         Assert.assertEquals(true,status);
 
-        LeaveApplication leaveApplication1 = new LeaveApplication();
-        leaveApplication.setId("1");
-        leaveApplication.setEmployeeId("AA");
-        leaveApplication.setReason("xyz");
-
-        boolean status1 = leaveApplicationDao.request(leaveApplication1);
-        Assert.assertEquals(true,status1);
+        leaveApplicationDao.cancelRequest("11");
     }
 */
 }
