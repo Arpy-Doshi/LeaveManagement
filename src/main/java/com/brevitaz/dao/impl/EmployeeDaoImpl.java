@@ -161,22 +161,19 @@ public class EmployeeDaoImpl implements EmployeeDao
 
 
         try {
-            GetResponse getResponse = config.getClient().get(getRequest);
 
-            Employee employee = config.getObjectMapper().readValue(getResponse.getSourceAsString(),Employee.class);
-            if(getResponse.isExists())
-            {
+            GetResponse response = config.getClient().get(getRequest);
+            Employee employee = config.getObjectMapper().readValue(response.getSourceAsString(), Employee.class);
+            if (response.isExists()) {
                 return employee;
-            }
-            else
-            {
+            } else {
                 return null;
             }
-
-        } catch (IOException e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
-        //System.out.println(employee);
-        return null;
-    }
+        return null; //System.out.println(employee);
+        }
 }

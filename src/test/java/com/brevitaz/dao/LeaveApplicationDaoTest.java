@@ -18,21 +18,17 @@ public class LeaveApplicationDaoTest {
 
     @Autowired
     LeaveApplicationDao leaveApplicationDao;
-/*
 
-    @Test
+  /*  @Test
     public void requestTest()  {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
+        leaveApplicationDao.request(leaveApplication);
 
-        try {
-            boolean status = leaveApplicationDao.request(leaveApplication);
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        LeaveApplication leaveApplication1 = leaveApplicationDao.
+
     }
 
     @Test
@@ -172,5 +168,4 @@ public class LeaveApplicationDaoTest {
         Assert.assertEquals(true,status1);
     }
 */
-
 }
