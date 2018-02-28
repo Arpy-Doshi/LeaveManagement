@@ -26,20 +26,32 @@ public class EmployeeDaoTest {
         employeeDao.create(employee);
 
         Employee employee1 = employeeDao.getById("11");
-        Assert.assertEquals(employee1.getName(), employee.getName());
+        Assert.assertEquals(employee.getName(),employee1.getName());
         employeeDao.delete("11");
     }
 
     @Test
     public void getAllTest() {
-        Employee employee = new Employee();
-        employee.setId("11");
-        employee.setName("Yash");
-        employee.setDepartment("Java");
-        employeeDao.create(employee);
+        Employee employee1 = new Employee();
+        employee1.setId("11");
+        employee1.setName("Yash");
+        employee1.setDepartment("Java");
+        employeeDao.create(employee1);
+
+        Employee employee2 = new Employee();
+        employee1.setId("11");
+        employee1.setName("Yash");
+        employee1.setDepartment("Java");
+        employeeDao.create(employee1);
+
+        Employee employee3 = new Employee();
+        employee1.setId("11");
+        employee1.setName("Yash");
+        employee1.setDepartment("Java");
+        employeeDao.create(employee1);
 
         List<Employee> employees = employeeDao.getAll();
-        Assert.assertNotNull(employees);
+        Assert.assertEquals(3,employees);
         employeeDao.delete("11");
     }
 
@@ -52,7 +64,7 @@ public class EmployeeDaoTest {
         employeeDao.create(employee);
 
         Employee employee1 = employeeDao.getById("11");
-        Assert.assertNotNull(employee1);
+        Assert.assertEquals(employee.getName(),employee1.getName());
         //employeeDao.delete("11");
     }
 
@@ -68,7 +80,7 @@ public class EmployeeDaoTest {
         employee1.setName("Arpy");
         employeeDao.update(employee1,"11");
         Employee employee3 = employeeDao.getById("11");
-        Assert.assertEquals(employee3.getName(),employee1.getName());
+        Assert.assertEquals(employee1.getName(),employee3.getName());
         employeeDao.delete("11");
 
     }
