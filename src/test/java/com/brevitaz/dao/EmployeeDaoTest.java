@@ -38,9 +38,18 @@ public class EmployeeDaoTest {
         employee.setDepartment("Java");
         employeeDao.create(employee);
 
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         List<Employee> employees = employeeDao.getAll();
-        Assert.assertNotNull(employees);
+        int size = employees.size();
+
+        Assert.assertEquals(1,size);
         employeeDao.delete("11");
+
     }
 
     @Test
@@ -53,7 +62,7 @@ public class EmployeeDaoTest {
 
         Employee employee1 = employeeDao.getById("11");
         Assert.assertNotNull(employee1);
-        //employeeDao.delete("11");
+        employeeDao.delete("11");
     }
 
     @Test
@@ -67,6 +76,7 @@ public class EmployeeDaoTest {
         Employee employee1 = new Employee();
         employee1.setName("Arpy");
         employeeDao.update(employee1,"11");
+
         Employee employee3 = employeeDao.getById("11");
         Assert.assertEquals(employee3.getName(),employee1.getName());
         employeeDao.delete("11");

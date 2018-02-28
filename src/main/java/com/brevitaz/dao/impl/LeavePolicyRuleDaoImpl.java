@@ -3,6 +3,7 @@ package com.brevitaz.dao.impl;
 import com.brevitaz.config.Config;
 import com.brevitaz.config.ElasticConfig;
 import com.brevitaz.dao.LeavePolicyRuleDao;
+import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeavePolicyRule;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -137,13 +138,11 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
                 indexName,
                 TYPE_NAME,
                 id);
-
         try {
-            GetResponse getResponse = config.getClient().get(getRequest);
+            GetResponse response = config.getClient().get(getRequest);
+            LeavePolicyRule leavePolicyRule = config.getObjectMapper().readValue(response.getSourceAsString(),LeavePolicyRule.class);
 
-             LeavePolicyRule leavePolicyRule = config.getObjectMapper().readValue(getResponse.getSourceAsString(),LeavePolicyRule.class);
-
-            if(getResponse.isExists())
+            if(response.isExists())
             {
                 return leavePolicyRule;
             }
@@ -153,9 +152,10 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
             }
 
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
+
 
         return null;
     }

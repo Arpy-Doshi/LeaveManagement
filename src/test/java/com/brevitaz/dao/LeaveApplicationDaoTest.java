@@ -19,7 +19,7 @@ public class LeaveApplicationDaoTest {
     @Autowired
     LeaveApplicationDao leaveApplicationDao;
 
-  /*  @Test
+ /*   @Test
     public void requestTest()  {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
@@ -30,7 +30,8 @@ public class LeaveApplicationDaoTest {
         LeaveApplication leaveApplication1 = leaveApplicationDao.
 
     }
-
+*/
+    /*
     @Test
     public void cancelRequestTest()
     {
