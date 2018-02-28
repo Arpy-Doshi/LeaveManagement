@@ -137,7 +137,7 @@ public class LeaveApplicationDaoTest {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
-        leaveApplication.setReason("xyz");
+        leaveApplication.setType(Type.PLANNED_LEAVE);
         leaveApplication.setStatus(Status.APPLIED);
         leaveApplicationDao.request(leaveApplication);
 
@@ -153,5 +153,5 @@ public class LeaveApplicationDaoTest {
 
         leaveApplicationDao.cancelRequest("11");
     }
-*/
+
 }
