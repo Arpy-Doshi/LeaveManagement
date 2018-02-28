@@ -45,7 +45,7 @@ public class LeaveApplicationController {
         return leaveApplicationDao.getByEmployeeId(employeeId);
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // for single leave.
+    @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // for single leave. TODO : add employeeID
     public LeaveApplication getById( @PathVariable String id)  {
         return leaveApplicationDao.getById(id);
     }

@@ -6,7 +6,7 @@ import java.util.List;
 public class LeavePolicy
 {
     private String id;
-    private List<LeavePolicyRule> leavePolicyRules = new ArrayList<>();
+    private List<LeavePolicyRule> leavePolicyRules;
 
     public String getId() {
         return id;
