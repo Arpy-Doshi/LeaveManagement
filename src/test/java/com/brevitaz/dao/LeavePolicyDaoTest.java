@@ -61,6 +61,14 @@ public class LeavePolicyDaoTest {
 
         leavePolicyDao.create(leavePolicy);
 
+        try{
+            Thread.sleep(500);
+        }
+        catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+
         List<LeavePolicy> leavePolicies = leavePolicyDao.getAll();
         int size = leavePolicies.size();
         Assert.assertEquals(1,size);
@@ -86,7 +94,9 @@ public class LeavePolicyDaoTest {
 
         LeavePolicyRule leavePolicyRule1 = new LeavePolicyRule();
         leavePolicyRule1.setId("1");
-        leavePolicyRule.setName("CDE");
+        leavePolicyRule1.setName("CDE");
+        leavePolicyRule1.setDescription("Hello");
+
 
         List<LeavePolicyRule> leavePolicyRules1 = new ArrayList<>();
         leavePolicyRules1.add(leavePolicyRule1);
