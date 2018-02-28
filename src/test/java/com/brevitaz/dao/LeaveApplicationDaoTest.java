@@ -19,7 +19,7 @@ public class LeaveApplicationDaoTest {
     @Autowired
     LeaveApplicationDao leaveApplicationDao;
 
-  /*  @Test
+    @Test
     public void requestTest()  {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
@@ -27,7 +27,10 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setReason("xyz");
         leaveApplicationDao.request(leaveApplication);
 
-        LeaveApplication leaveApplication1 = leaveApplicationDao.
+       List<LeaveApplication> leaveApplications = leaveApplicationDao.getById("AA");
+        Assert.assertEquals(leaveApplication,leaveApplications.get(0));
+
+        leaveApplicationDao.cancelRequest("1");
 
     }
 
@@ -37,18 +40,14 @@ public class LeaveApplicationDaoTest {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("1");
         leaveApplication.setEmployeeId("BB");
-
         leaveApplication.setReason("xyz");
 
-        try {
-            boolean status = leaveApplicationDao.cancelRequest("1");
-            Assert.assertEquals(true,status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean status = leaveApplicationDao.cancelRequest("1");
+        Assert.assertEquals(true,status);
+
     }
 
-    @Test
+   /* @Test
     public void updateRequestTest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
@@ -73,9 +72,9 @@ public class LeaveApplicationDaoTest {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void getAllTest() {
 
         LeaveApplication leaveApplication = new LeaveApplication();
@@ -97,8 +96,8 @@ public class LeaveApplicationDaoTest {
             e.printStackTrace();
         }
     }
-
-    @Test
+*/
+   /* @Test
     public void checkStatus()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
@@ -119,9 +118,9 @@ public class LeaveApplicationDaoTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void getByIDTest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
@@ -144,7 +143,7 @@ public class LeaveApplicationDaoTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     @Test
@@ -167,5 +166,4 @@ public class LeaveApplicationDaoTest {
         boolean status1 = leaveApplicationDao.request(leaveApplication1);
         Assert.assertEquals(true,status1);
     }
-*/
 }

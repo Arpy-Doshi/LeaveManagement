@@ -26,7 +26,7 @@ public class EmployeeDaoTest {
         employeeDao.create(employee);
 
         Employee employee1 = employeeDao.getById("11");
-        Assert.assertEquals(employee.getName(),employee1.getName());
+        Assert.assertEquals(employee1.getName(),employee.getName());
         employeeDao.delete("11");
     }
 
@@ -64,7 +64,7 @@ public class EmployeeDaoTest {
         employeeDao.create(employee);
 
         Employee employee1 = employeeDao.getById("11");
-        Assert.assertEquals(employee.getName(),employee1.getName());
+        Assert.assertEquals(employee1.getName(),employee.getName());
         //employeeDao.delete("11");
     }
 
@@ -80,7 +80,7 @@ public class EmployeeDaoTest {
         employee1.setName("Arpy");
         employeeDao.update(employee1,"11");
         Employee employee3 = employeeDao.getById("11");
-        Assert.assertEquals(employee1.getName(),employee3.getName());
+        Assert.assertEquals(employee3.getName(),employee1.getName());
         employeeDao.delete("11");
 
     }
