@@ -75,8 +75,16 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setReason("xyz");
         leaveApplicationDao.request(leaveApplication);
 
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         List<LeaveApplication> leaveApplications = leaveApplicationDao.getAll();
         int size = leaveApplications.size();
+        Assert.assertEquals(1,size);
+
         leaveApplicationDao.cancelRequest("11");
     }
 
