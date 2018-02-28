@@ -108,7 +108,7 @@ public class LeaveApplicationDaoTest {
 
 
     @Test
-    public void getByIDTest()
+    public void getByEmployeeIDTest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("11");
@@ -122,7 +122,7 @@ public class LeaveApplicationDaoTest {
             e.printStackTrace();
         }
 
-        List<LeaveApplication> leaveApplications = leaveApplicationDao.getById("AA");
+        List<LeaveApplication> leaveApplications = leaveApplicationDao.getByEmployeeId("AA");
         int size = leaveApplications.size();
         Assert.assertEquals(1,size);
         leaveApplicationDao.cancelRequest("11");
