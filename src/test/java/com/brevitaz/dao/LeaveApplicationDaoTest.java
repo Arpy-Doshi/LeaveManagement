@@ -108,7 +108,7 @@ public class LeaveApplicationDaoTest {
         leaveApplicationDao.cancelRequest("11");
     }
 
-    /*
+
     @Test
     public void getByIDTest()
     {
@@ -118,13 +118,19 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setReason("xyz");
         leaveApplicationDao.request(leaveApplication);
 
-        boolean status = leaveApplicationDao.request(leaveApplication);
-        Assert.assertEquals(true,status);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        List<LeaveApplication> leaveApplications = leaveApplicationDao.getById("AA");
+        int size = leaveApplications.size();
+        Assert.assertEquals(1,size);
         leaveApplicationDao.cancelRequest("11");
     }
 
-*/
+
     @Test
     public void checkRequestTest() throws IOException// TODO: remaining
     {
@@ -147,5 +153,5 @@ public class LeaveApplicationDaoTest {
 
         leaveApplicationDao.cancelRequest("11");
     }
-
+*/
 }
