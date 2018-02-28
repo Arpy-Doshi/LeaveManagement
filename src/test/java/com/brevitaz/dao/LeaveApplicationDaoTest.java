@@ -91,7 +91,7 @@ public class LeaveApplicationDaoTest {
     }
 
     @Test
-    public void checkStatus()
+    public void getByIdTest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("11");
@@ -100,7 +100,7 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setStatus(Status.APPLIED);
         leaveApplicationDao.request(leaveApplication);
 
-        LeaveApplication leaveApplication1 = leaveApplicationDao.checkStatus("11");
+        LeaveApplication leaveApplication1 = leaveApplicationDao.getById("11");
         Assert.assertEquals(leaveApplication1.getStatus(),leaveApplication.getStatus());
 
         leaveApplicationDao.cancelRequest("11");
