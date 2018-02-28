@@ -133,7 +133,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
     }
 
     @Override
-    public LeaveApplication checkStatus(String id) {
+    public LeaveApplication getById(String id) {
         GetRequest getRequest = new GetRequest(
                 indexName,
                 TYPE_NAME,
@@ -159,7 +159,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
 
 
     @Override
-    public List<LeaveApplication> getById(String employeeId)
+    public List<LeaveApplication> getByEmployeeId(String employeeId)
     {
   /*      SearchRequest request = new SearchRequest(INDEX_NAME);
         request.types(TYPE_NAME);

@@ -16,9 +16,9 @@ public interface LeaveApplicationDao {
 
     public boolean updateRequest(LeaveApplication leaveApplication, String id) ;
 
-    public LeaveApplication checkStatus( String id);
+    public LeaveApplication getById( String id);
 
-    public List<LeaveApplication> getById(String employeeId);
+    public List<LeaveApplication> getByEmployeeId(String employeeId);
 
     public List<LeaveApplication> checkRequest() ;
 
