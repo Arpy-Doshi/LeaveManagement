@@ -2,6 +2,8 @@ package com.brevitaz.dao;
 
 import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
+import com.brevitaz.model.Status;
+import com.brevitaz.model.Type;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -54,6 +56,8 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
+        leaveApplication.setStatus(Status.APPLIED);
+        leaveApplication.setType(Type.PLANNED_LEAVE);
         leaveApplicationDao.request(leaveApplication);
 
         LeaveApplication leaveApplication1 = new LeaveApplication();
@@ -120,7 +124,7 @@ public class LeaveApplicationDaoTest {
         leaveApplicationDao.cancelRequest("11");
     }
 
-
+*/
     @Test
     public void checkRequestTest() throws IOException// TODO: remaining
     {
@@ -128,12 +132,20 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
+        leaveApplication.setStatus(Status.APPLIED);
         leaveApplicationDao.request(leaveApplication);
 
-        boolean status = leaveApplicationDao.request(leaveApplication);
-        Assert.assertEquals(true,status);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        List<LeaveApplication> leaveApplications = leaveApplicationDao.checkRequest();
+        int size = leaveApplications.size();
+        Assert.assertEquals(1,size);
 
         leaveApplicationDao.cancelRequest("11");
     }
-*/
+
 }

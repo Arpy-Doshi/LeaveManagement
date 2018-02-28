@@ -15,15 +15,6 @@ public class LeaveApplication
     private Date toDate;
     private Type type;
     private Status status;
-
-    private enum Type
-    {
-        PLANNED_LEAVE,UNPLANNED_LEAVE,LEAVE_WITHOUT_PAY;
-    }
-    private enum Status
-    {
-        APPROVED,APPLIED,REJECTED;
-    }
    /* private enum Time
 
     {
