@@ -1,10 +1,8 @@
 package com.brevitaz.dao;
 
-import com.brevitaz.model.Employee;
 import com.brevitaz.model.LeaveApplication;
 import com.brevitaz.model.Status;
 import com.brevitaz.model.Type;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -99,11 +97,11 @@ public class LeaveApplicationDaoTest {
         leaveApplication.setId("11");
         leaveApplication.setEmployeeId("AA");
         leaveApplication.setReason("xyz");
-        //leaveApplication.setStatus("APPLIED");
+        leaveApplication.setStatus(Status.APPLIED);
         leaveApplicationDao.request(leaveApplication);
 
         LeaveApplication leaveApplication1 = leaveApplicationDao.checkStatus("11");
-        Assert.assertNotNull(leaveApplication1);
+        Assert.assertEquals(leaveApplication1.getStatus(),leaveApplication.getStatus());
 
         leaveApplicationDao.cancelRequest("11");
     }
@@ -153,5 +151,5 @@ public class LeaveApplicationDaoTest {
 
         leaveApplicationDao.cancelRequest("11");
     }
-*/
+
 }
