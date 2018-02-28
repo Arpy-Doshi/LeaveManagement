@@ -19,7 +19,6 @@ import java.util.List;
 public class LeavePolicyDaoTest {
     @Autowired
     LeavePolicyDao leavePolicyDao;
-/*
 
     @Test
     public void createTest() {
@@ -35,88 +34,52 @@ public class LeavePolicyDaoTest {
         leavePolicy.setId("1");
         leavePolicy.setLeavePolicyRules(leavePolicyRules);
 
-        try {
-            boolean status = leavePolicyDao.create(leavePolicy);
-            Assert.assertEquals(true, status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        leavePolicyDao.create(leavePolicy);
+
+        LeavePolicy leavePolicy1 = leavePolicyDao.getById("1");
+
+        Assert.assertEquals(leavePolicy1.getLeavePolicyRules(),leavePolicy.getLeavePolicyRules());
+
+        leavePolicyDao.delete("1");
     }
+
 
     @Test
     public void getAllTest()
     {
-        LeavePolicyRule leavePolicyRule = new LeavePolicyRule();
-        leavePolicyRule.setId("2");
-        leavePolicyRule.setName("Abc");
-        leavePolicyRule.setDescription("fcgtyuijklmnjbhvg");
+        LeavePolicyRule leavePolicyRule1 = new LeavePolicyRule();
+        leavePolicyRule1.setId("1");
+        leavePolicyRule1.setName("Abc");
+        leavePolicyRule1.setDescription("fcgtyuijklmnjbhvg");
 
         List<LeavePolicyRule> leavePolicyRules = new ArrayList<>();
-        leavePolicyRules.add(leavePolicyRule);
+        leavePolicyRules.add(leavePolicyRule1);
 
         LeavePolicy leavePolicy = new LeavePolicy();
-        leavePolicy.setId("2");
+        leavePolicy.setId("1");
         leavePolicy.setLeavePolicyRules(leavePolicyRules);
 
-        try {
-            boolean status = leavePolicyDao.create(leavePolicy);
-            Assert.assertEquals(true, status);
-        } catch (IOException e) {
+        leavePolicyDao.create(leavePolicy);
+
+        try{
+            Thread.sleep(500);
+        }
+        catch(InterruptedException e)
+        {
             e.printStackTrace();
         }
 
-        try {
-            List<LeavePolicy> leavePolicies = leavePolicyDao.getAll();
-            Assert.assertNotNull(leavePolicies);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<LeavePolicy> leavePolicies = leavePolicyDao.getAll();
+        int size = leavePolicies.size();
+        Assert.assertEquals(1,size);
+
     }
 
     @Test
     public void updateTest()
     {
         LeavePolicyRule leavePolicyRule = new LeavePolicyRule();
-        leavePolicyRule.setId("4");
-        leavePolicyRule.setName("Abc");
-        leavePolicyRule.setDescription("fcgtyuijklmnjbhvg");
-
-        List<LeavePolicyRule> leavePolicyRules = new ArrayList<>();
-        leavePolicyRules.add(leavePolicyRule);
-
-        LeavePolicy leavePolicy = new LeavePolicy();
-        leavePolicy.setId("3");
-        leavePolicy.setLeavePolicyRules(leavePolicyRules);
-
-        try {
-            boolean status = leavePolicyDao.create(leavePolicy);
-            Assert.assertEquals(true, status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        LeavePolicyRule leavePolicyRule1 = new LeavePolicyRule();
-        leavePolicyRule1.setId("3");
-
-        List<LeavePolicyRule> leavePolicyRules1 = new ArrayList<>();
-        leavePolicyRules1.add(leavePolicyRule1);
-
-        leavePolicy.setLeavePolicyRules(leavePolicyRules1);
-
-        try {
-            boolean status1 = leavePolicyDao.update(leavePolicy,"3");
-            Assert.assertEquals(true,status1);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void deleteTest()
-    {
-        LeavePolicyRule leavePolicyRule = new LeavePolicyRule();
-        leavePolicyRule.setId("4");
+        leavePolicyRule.setId("1");
         leavePolicyRule.setName("Abc");
         leavePolicyRule.setDescription("fcgtyuijklmnjbhvg");
 
@@ -127,27 +90,31 @@ public class LeavePolicyDaoTest {
         leavePolicy.setId("1");
         leavePolicy.setLeavePolicyRules(leavePolicyRules);
 
-        try {
-            boolean status = leavePolicyDao.create(leavePolicy);
-            Assert.assertEquals(true, status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        leavePolicyDao.create(leavePolicy);
 
-        try {
-            boolean status1 = leavePolicyDao.delete("4");
-            Assert.assertEquals(true,status1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        LeavePolicyRule leavePolicyRule1 = new LeavePolicyRule();
+        leavePolicyRule1.setId("1");
+        leavePolicyRule1.setName("CDE");
+        leavePolicyRule1.setDescription("Hello");
 
+
+        List<LeavePolicyRule> leavePolicyRules1 = new ArrayList<>();
+        leavePolicyRules1.add(leavePolicyRule1);
+
+        LeavePolicy leavePolicy1 = new LeavePolicy();
+        leavePolicy1.setLeavePolicyRules(leavePolicyRules1);
+
+        leavePolicyDao.update(leavePolicy1,"1");
+
+        LeavePolicy leavePolicy2 = leavePolicyDao.getById("1");
+
+        Assert.assertEquals(leavePolicy2.getLeavePolicyRules(),leavePolicy1.getLeavePolicyRules());
     }
-
     @Test
-    public void getByIdTest()
+    public void deleteTest()
     {
         LeavePolicyRule leavePolicyRule = new LeavePolicyRule();
-        leavePolicyRule.setId("4");
+        leavePolicyRule.setId("1");
         leavePolicyRule.setName("Mno");
         leavePolicyRule.setDescription("fcgtyuijklmnjbhvg");
 
@@ -155,24 +122,40 @@ public class LeavePolicyDaoTest {
         leavePolicyRules.add(leavePolicyRule);
 
         LeavePolicy leavePolicy = new LeavePolicy();
-        leavePolicy.setId("4");
+        leavePolicy.setId("1");
         leavePolicy.setLeavePolicyRules(leavePolicyRules);
 
-        try {
-            boolean status = leavePolicyDao.create(leavePolicy);
-            Assert.assertEquals(true, status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        leavePolicyDao.create(leavePolicy);
 
-        try {
-            LeavePolicy leavePolicy1 = leavePolicyDao.getById("4");
-            Assert.assertNotNull(leavePolicy1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        leavePolicyDao.delete("1");
+
+        LeavePolicy leavePolicy1 = leavePolicyDao.getById("1");
+
+        Assert.assertNull(leavePolicy1);
 
     }
-*/
 
+    @Test
+    public void getByIdTest()
+    {
+        LeavePolicyRule leavePolicyRule = new LeavePolicyRule();
+        leavePolicyRule.setId("1");
+        leavePolicyRule.setName("Mno");
+        leavePolicyRule.setDescription("fcgtyuijklmnjbhvg");
+
+        List<LeavePolicyRule> leavePolicyRules = new ArrayList<>();
+        leavePolicyRules.add(leavePolicyRule);
+
+        LeavePolicy leavePolicy = new LeavePolicy();
+        leavePolicy.setId("1");
+        leavePolicy.setLeavePolicyRules(leavePolicyRules);
+
+        leavePolicyDao.create(leavePolicy);
+
+        LeavePolicy leavePolicy1 = leavePolicyDao.getById("1");
+
+        Assert.assertEquals(leavePolicy1.getLeavePolicyRules(),leavePolicy.getLeavePolicyRules());
+
+
+    }
 }

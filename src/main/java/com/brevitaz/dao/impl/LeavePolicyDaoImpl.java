@@ -100,7 +100,7 @@ public class LeavePolicyDaoImpl implements LeavePolicyDao
             }
         }
 
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
 

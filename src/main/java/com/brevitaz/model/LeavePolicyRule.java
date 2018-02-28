@@ -38,4 +38,18 @@ public class LeavePolicyRule
                 ", description='" + description + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LeavePolicyRule that = (LeavePolicyRule) o;
+
+        if (!id.equals(that.id)) return false;
+        if (!name.equals(that.name)) return false;
+        return description.equals(that.description);
+    }
+
+
 }

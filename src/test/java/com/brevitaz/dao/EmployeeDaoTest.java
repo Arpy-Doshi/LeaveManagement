@@ -61,7 +61,7 @@ public class EmployeeDaoTest {
         employeeDao.create(employee);
 
         Employee employee1 = employeeDao.getById("11");
-        Assert.assertNotNull(employee1);
+        Assert.assertEquals(employee1.getName(),employee.getName());
         employeeDao.delete("11");
     }
 
