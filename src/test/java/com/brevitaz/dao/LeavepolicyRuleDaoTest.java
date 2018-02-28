@@ -30,7 +30,6 @@ public class LeavepolicyRuleDaoTest {
         Assert.assertEquals(leavePolicyRule1.getName(),leavePolicyRule.getName());
 
         leavePolicyRuleDao.delete("11");
-
     }
 
     @Test
@@ -70,7 +69,6 @@ public class LeavepolicyRuleDaoTest {
         Assert.assertEquals(leavePolicyRule1.getName(),leavePolicyRule2.getName());
 
         leavePolicyRuleDao.delete("11");
-
     }
 
     @Test
@@ -85,9 +83,6 @@ public class LeavepolicyRuleDaoTest {
 
         LeavePolicyRule leavePolicyRule1 = leavePolicyRuleDao.getById("11");
         Assert.assertNull(leavePolicyRule1);
-
-
-
     }
 
     @Test
@@ -105,4 +100,4 @@ public class LeavepolicyRuleDaoTest {
         leavePolicyRuleDao.delete("11");
 
       }
-    }
+}
