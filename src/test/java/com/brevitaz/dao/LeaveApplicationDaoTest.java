@@ -133,7 +133,7 @@ public class LeaveApplicationDaoTest {
 
 
     @Test
-    public void checkRequestTest() throws IOException// TODO: remaining
+    public void checkRequestTest() throws IOException
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("11");
@@ -156,7 +156,7 @@ public class LeaveApplicationDaoTest {
     }
 
     @Test
-    public void approveRequesttest()
+    public void approveRequestTest()
     {
         LeaveApplication leaveApplication = new LeaveApplication();
         leaveApplication.setId("11");
@@ -178,4 +178,9 @@ public class LeaveApplicationDaoTest {
 
     }
 
+    @Test
+    public void getByDateTest()// TODO: Remaining
+    {
+        
+    }
 }
