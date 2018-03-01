@@ -65,7 +65,7 @@ public class LeaveApplicationDaoImpl implements LeaveApplicationDao
             request.source(json, XContentType.JSON);
             IndexResponse indexResponse  = config.getClient().index(request);
             System.out.println(indexResponse);
-            if(indexResponse.status() == RestStatus.OK)
+            if(indexResponse.status() == RestStatus.CREATED)
             {
                 return true;
             }

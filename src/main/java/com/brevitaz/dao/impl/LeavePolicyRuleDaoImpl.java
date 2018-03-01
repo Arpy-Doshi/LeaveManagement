@@ -65,7 +65,7 @@ public class LeavePolicyRuleDaoImpl implements LeavePolicyRuleDao
             IndexResponse indexResponse = config.getClient().index(request);
             System.out.println(indexResponse);
 
-            if (indexResponse.status() == RestStatus.OK) {
+            if (indexResponse.status() == RestStatus.CREATED) {
                 return true;
             } else {
                 return false;
