@@ -45,8 +45,8 @@ public class LeaveApplicationController {
         return leaveApplicationDao.getByEmployeeId(employeeId);
     }
 
-    @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // for single leave. TODO : add employeeID
-    public LeaveApplication getById( @PathVariable String id)  {
+    @RequestMapping(value = "{employeeId}/{id}" , method = RequestMethod.GET) // for single leave. TODO : add employeeID
+    public LeaveApplication getById(@PathVariable String id)  {
         return leaveApplicationDao.getById(id);
     }
 
@@ -76,9 +76,6 @@ public class LeaveApplicationController {
         return leaveApplicationDao.getAll();
     }
 
-
-
-
     //**************** what should i pass in below two methods ?
    /*
    @RequestMapping(value = "/get-report" , method = RequestMethod.GET)//2 things in service 1 is emp wise i.e. getById & 2 is date wise i.e.From Date To Date
@@ -88,9 +85,4 @@ public class LeaveApplicationController {
     }
 
 */
-
-
-
-
-
 }
