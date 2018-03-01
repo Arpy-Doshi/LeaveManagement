@@ -40,12 +40,12 @@ public class LeaveApplicationController {
         return 0;
     }
 
-    @RequestMapping(value = "/{employeeId}" , method = RequestMethod.GET) // personal record.
+    @RequestMapping(value = "/getByEmployeeID/{employeeId}" , method = RequestMethod.GET) // personal record.
     public List<LeaveApplication> getByEmployeeId( @PathVariable String employeeId)  {
         return leaveApplicationDao.getByEmployeeId(employeeId);
     }
 
-    @RequestMapping(value = "{employeeId}/{id}" , method = RequestMethod.GET) // for single leave. TODO : add employeeID
+    @RequestMapping(value = "/{id}" , method = RequestMethod.GET) // for single leave. TODO : add employeeID
     public LeaveApplication getById(@PathVariable String id)  {
         return leaveApplicationDao.getById(id);
     }
